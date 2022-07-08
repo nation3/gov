@@ -34,7 +34,7 @@ flowchart LR
    - Platform: [Snapshot](https://snapshot.org/#/nation3.eth)
 4. **On-chain enactment**: $veNATION holders can ratify the proposal. The Governance Guild is repsonsible for creating the proposal on Aragon.
    - Duration: 48h
-   - Platform: [Snapshot](https://snapshot.org/#/nation3.eth)
+   - Platform: [Aragon](https://client.aragon.org/#/nation3/0x92462953792d3e84af56edfc74d93e5885d38cc0/)
 
 ```mermaid
 gantt
@@ -55,3 +55,5 @@ WIP (the voting census is constituted by the Nation3 citizens)
 ## Voting mechanisms and parameters
 
 WIP
+
+- Supermajority vote scope: $NATION issuance
