@@ -17,18 +17,14 @@ This document outlines the governance process that the Nation3 citizens, the mem
 ```mermaid
 flowchart LR
   REVIEW[Community review] --> FINAL[Final proposal]
-  FINAL --> DISPUTE[Dispute period]
-  DISPUTE --> OFFVOTE[Off-chain vote]
+  FINAL --> OFFVOTE[Off-chain vote]
   OFFVOTE --> ONVOTE[On-chain enactment]
 ```
 
 1. **Community review**: The community provides feedback on a published proposal for the proposer to consider. After the minimum duration required for this stage, the proposer can freeze their proposal, advancing it to the next stage. After freeze, any further modifications to the proposal require restarting the process.
    - **Duration**: >48h
    - **Platform**: [Forum](https://forum.nation3.org)
-2. **Dispute period**: Citizens can dispute the proposal if they deem it unconstitutional.
-   - **Duration**: 48h
-   - **Platform**: Court (soon)
-3. **Off-chain vote**: Citizens can vote. The Governance Guild is responsible for creating the proposal on Snapshot.
+2. **Off-chain vote**: Citizens can vote. The Governance Guild is responsible for creating the proposal on Snapshot.
 
    - **Duration**: 48h
    - **Platform**: [Snapshot](https://snapshot.org/#/nation3.eth)
@@ -39,7 +35,7 @@ flowchart LR
      - **All other kinds of proposals**: _Single Choice_
    - **Voting threshold**: Simple majority
 
-4. **On-chain enactment**: $veNATION holders can ratify the proposal. The Meta Guild is responsible for creating the proposal on Aragon.
+3. **On-chain enactment**: $veNATION holders can ratify the proposal. The Meta Guild is responsible for creating the proposal on Aragon.
    - **Duration**: 48h
    - **Platform**: [Aragon](https://client.aragon.org/#/nation3/0x92462953792d3e84af56edfc74d93e5885d38cc0/)
    - **Census**: All $veNATION holders
@@ -56,7 +52,6 @@ axisFormat %d
 title Lifecycle of a proposal
 
 Community review: 1, 0000-01-01, 2d
-Dispute period: 2, after 1, 2d
 Off-chain vote: 3, after 2, 2d
 On-chain enactment: 4, after 3, 2d
 ```
