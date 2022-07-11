@@ -10,8 +10,8 @@ WIP, this document hasn't been adopted by the Nation3 DAO yet nor approved by th
 - **Proclamation**: Proposal for the Nation3 DAO to adopt a statement.
 - **Expense**: Proposal to transfer an ERC20 token outside of the Nation3 DAO's treasury, with the expectation that it flows outside of its control.
 - **Parameter change**: Proposal to perform a parameter change in one of the contracts owned by the Nation3 DAO.
-- **Custodial treasury management proposal**: Proposal to perform a treasury management operation, with the Nation3 DAO keeping the ultimate custody of the funds.
-- **Non-custodial treasury management proposal**: Proposal to perform a treasury management operation, with the Nation3 DAO temporarily losing the ultimate custody of the funds.
+- **Treasury management proposal**: Proposal to perform an on-chain treasury management operation.
+- **Custodial treasury management proposal**: Proposal to perform a treasury management operation, with the Nation3 DAO keeping the legitimate ownership over the assets but holding them through a third-party custodian.
 
 ## Stages of a proposal
 
