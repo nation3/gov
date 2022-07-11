@@ -44,7 +44,7 @@ type AlternativeSnapshotVotingSystems =
 // Proposal for the Nation3 DAO to adopt a statement
 // This is the only kind of proposal in which users can easily understand
 // multiple choices, since they are written in plain English
-// Because of that this will be the only kind of proposal on Snapshot that can
+// Because of that, this is the only kind of proposal on Snapshot that can
 // use voting systems other than single choice
 // statement: Statement that the Nation3 DAO would adopt
 type ProclamationProposal = {
