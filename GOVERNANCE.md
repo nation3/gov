@@ -68,14 +68,3 @@ The Nation3 DAO has an Agent app instance (called _Sensitive Agent_) governed by
 - **Voting threshold**: >66% (supermajority) approval threshold with >20% participation rate.
 
 Any proposal which would originate a transaction from the _Sensitive Agent_ app on the Nation3 DAO must be tagged as sensitive. All sensitive proposals follow the same governance process as standard proposals, but instead of 48h for each step in the process, it's 168h (a full week).
-
-## Proposals Committee
-
-The entities allowed to
-
-Parameter change proposal can change them
-
-## Glossary
-
-- **Nation3 citizen**: Person holding a valid passport NFT issued by Nation3.
-- **Meta Guild**:
