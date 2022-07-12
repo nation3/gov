@@ -1,22 +1,25 @@
-// This file defines the types and data structures for the different kinds of
-// proposals that can be presented to the Nation3 DAO
+// Data structures for governance proposals presented to the Nation3 DAO
+// Version 1.0-beta1
 
 // Shared types
 
-// Just to improve code understandability
+// To improve code understandability
 type Address = string
 
-// Defines a call to a smart contract
+// Only supporting Ethereum for now
+type ChainId = 1
+
+// Call to a smart contract
 type ContractCall = {
-  chainId: number
+  chainId: ChainId
   target: Address
   method: string
   parameters: Array<string>
 }
 
-// Defines an ERC20 transfer
+// ERC20 transfer
 type Transfer = {
-  chainId: number
+  chainId: ChainId
   recipient: Address
   token: Address
   amount: number
@@ -26,11 +29,11 @@ type Transfer = {
 
 // Off-chain proposal types
 
-// Proposal that affects the governance process itself (either this file or
-// GOVERNANCE.md)
-// prLink: Link to a pull request on GitHub with the proposed changes
+// Proposal that modifies the current governance process (`specs/N3GOV-v1.ts`
+// and `GOVERNANCE.md`)
+// prURI: Link to a pull request to this repo on GitHub
 type MetaProposal = {
-  prLink: string
+  prURI: string
 }
 
 // Defines Snapshot's voting systems, except for quadratic which currently
@@ -42,13 +45,15 @@ type AlternativeSnapshotVotingSystems =
   | 'weighted'
 
 // Proposal for the Nation3 DAO to adopt a statement
-// This is the only kind of proposal in which users can easily understand
-// multiple choices, since they are written in plain English
-// Because of that, this is the only kind of proposal on Snapshot that can
-// use voting systems other than single choice
+// Since multiple choices would be written in English and not encoded, this is
+// the only kind of proposal on Snapshot that can use other voting systems
+// other than Single Choice
 // statement: Statement that the Nation3 DAO would adopt
+// choices: Choices citizens can choose from
+// snapshotVotingSystem: Voting system to use for the vote
 type ProclamationProposal = {
   statement: string
+  choices: Array<string>
   snapshotVotingSystem: AlternativeSnapshotVotingSystems
 }
 
@@ -69,9 +74,9 @@ type TreasuryManagementProposal = ContractCall
 
 // Proposal to perform a treasury management operation, with the Nation3 DAO
 // keeping the legitimate ownership over the assets but holding them through a
-// third-party custodian
+// third-party entity
 // Examples: Loans to legal entities, equity investments held via a legal
-// proxy, liquidations via CEXes
+// proxy, liquidations via centralized exchange
 type CustodialTreasuryManagementProposal = Transfer
 
 // Kind to identify each type of proposal
@@ -83,7 +88,7 @@ type Kind =
   | 'custodial-treasury-management'
 
 // Proposer of the proposal
-// account: EVM-compatible address of the proposer
+// account: EVM-compliant address of the proposer
 // signature: Cryptographic signature corresponding to the proposer's account
 // in which they validate their role as proposer (TODO: Specify signature type)
 type Proposer = {
@@ -92,10 +97,9 @@ type Proposer = {
 }
 
 // Agreement in the Nation3 jurisdiction entered by the proposer in order to
-// send a governance proposal. They can be slashed in case of breach of their
-// proposer duties
+// send a governance proposal. They can be slashed in case of breach of duties
 type Agreement = {
-  chainId: number
+  chainId: ChainId
   courtVersion: number
   agreementId: number
 }
@@ -118,12 +122,16 @@ type SnapshotVote = Vote & {
 // Proposal
 // spec: Version of this spec that the proposal adheres to
 // id: Numeric identifier for the proposal, assigned at the time of PR creation
-// kind, content, proposer, agreement: Self-explanatory
+// discussion: URI where the discussion leading to this proposal can be found
+// kind, content, proposer: Self-explanatory
+// sensitive: Must be true if the proposal would trigger a transaction from the
+// Nation3 DAO Sensitive Agent app
 // agreement: Optional since the court isn't live yet
 // votes: Contains the Snapshot vote and the Aragon vote, if there is one. They // will be added as they go live
 type Proposal = {
   spec: number
   id: number
+  discussion: string
   kind: Kind
   content:
     | MetaProposal
@@ -133,6 +141,7 @@ type Proposal = {
     | TreasuryManagementProposal
     | CustodialTreasuryManagementProposal
   proposer: Proposer
+  sensitive?: boolean
   agreement?: Agreement
   votes?: [SnapshotVote, Vote?]
 }

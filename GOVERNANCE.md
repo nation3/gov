@@ -1,6 +1,6 @@
 # Nation3 governance process
 
-This document outlines the governance process that the Nation3 citizens, the members of the Meta Guild and the proposers must follow to engage with Nation3 governance.
+This document outlines the governance process that the Nation3 citizens, the Meta Guild multisig and the proposers must follow to engage with Nation3 governance.
 
 ## Kinds of proposals
 
@@ -43,7 +43,7 @@ flowchart LR
    - **Voting system**: Binary (yes/no).
    - **Voting threshold**: Simple majority.
 
-Census and voting weights are determined at the time of vote creation, both for the Nation3 space on Snapshot and the Nation3 DAO on Aragon. Nation3 passports and $veNATION are currently only on Ethereum.
+Census and voting weights are determined at the time of vote creation, both for the Nation3 space on Snapshot and the Nation3 DAO on Aragon. The Nation3 DAO, Nation3 passports and $veNATION are currently only on Ethereum.
 
 ```mermaid
 gantt
@@ -56,15 +56,38 @@ Off-chain vote: 2, after 1, 2d
 On-chain enactment: 3, after 2, 2d
 ```
 
+## Submitting a proposal
+
+1. Once you are ready to submit a formal proposal, go to the [Proposal Generator](TODO) to generate an encoded version.
+2. [Open a pull request](TODO) adding the proposal to this repo. Link the pull request at the end of your forum post.
+3. Modify the proposal based on feedback, both in the forum and in the pull request.
+4. Once the feedback period ends, you can tag it as `frozen` on GitHub.
+5. A bot will automatically merge it after checking:
+   - All data types match the spec.
+   - The forum post is at least 48h old and contains the encoded proposal.
+   - The proposer signature is correct and the proposer is a citizen.
+6. The Meta Guild multisig creates the vote on Snapshot.
+7. The Meta Guild multisig creates the vote on Aragon.
+
 ## Sensitive proposals
 
 The Nation3 DAO has an Agent app instance (called _Sensitive Agent_) governed by a Voting app with the following voting parameters:
 
 - **Duration**: 168h (one full week).
-- **Platform**: [Aragon]().
+- **Platform**: [Aragon](TODO).
 - **Census**: All $veNATION holders.
 - **Voting weight**: Token-weighted by $veNATION balance.
 - **Voting system**: Binary (yes/no).
 - **Voting threshold**: >66% (supermajority) approval threshold with >20% participation rate.
 
-Any proposal which would originate a transaction from the _Sensitive Agent_ app on the Nation3 DAO must be tagged as sensitive. All sensitive proposals follow the same governance process as standard proposals, but instead of 48h for each step in the process, it's 168h (a full week).
+Any proposal which would trigger a transaction from the _Sensitive Agent_ app on the Nation3 DAO must be tagged as sensitive. All sensitive proposals follow the same governance process as standard proposals, but instead of 48h for each step in the process, it's 168h (a full week).
+
+## Who can create votes
+
+The [Meta Guild multisig](TODO) has permission to create votes, both in the Nation3 space on Snapshot and the Nation3 DAO on Aragon.
+
+The Nation3 DAO can request changes in the signers and signing threshold of the Meta Guild multisig by passing a _Proclamation_ proposal. The Nation3 DAO can replace the Meta Guild multisig from creating votes on Aragon by passing a _Parameter Change_ proposal revoking the multisig's permission to create votes.
+
+As a backup mechanism in case of multisig malfunction, the Nation3 Proposals Backup DAO can create votes on Aragon. The Voting app installed on such DAO is configured with the exact same parameters as the _Sensitive Agent_ app, with the exception of any $veNATION holder being able to create votes on it.
+
+Add discussion link to forum to spec and also choices array
