@@ -26,6 +26,13 @@ type Transfer = {
 }
 
 // Proposal types
+type Kind =
+  | 'meta'
+  | 'proclamation'
+  | 'expense'
+  | 'parameter-change'
+  | 'treasury-management'
+  | 'custodial-treasury-management'
 
 // Off-chain proposal types
 
@@ -50,11 +57,11 @@ type AlternativeSnapshotVotingSystems =
 // other than Single Choice
 // statement: Statement that the Nation3 DAO would adopt
 // choices: Choices citizens can choose from
-// snapshotVotingSystem: Voting system to use for the vote
+// votingSystem: Voting system to use for the vote
 type ProclamationProposal = {
   statement: string
   choices: Array<string>
-  snapshotVotingSystem: AlternativeSnapshotVotingSystems
+  votingSystem: AlternativeSnapshotVotingSystems
 }
 
 // On-chain proposal types
@@ -78,14 +85,6 @@ type TreasuryManagementProposal = ContractCall
 // Examples: Loans to legal entities, equity investments held via a legal
 // proxy, liquidations via centralized exchange
 type CustodialTreasuryManagementProposal = Transfer
-
-// Kind to identify each type of proposal
-type Kind =
-  | 'meta'
-  | 'proclamation'
-  | 'expense'
-  | 'treasury-management'
-  | 'custodial-treasury-management'
 
 // Proposer of the proposal
 // account: EVM-compliant address of the proposer
@@ -124,8 +123,8 @@ type SnapshotVote = Vote & {
 // id: Numeric identifier for the proposal, assigned at the time of PR creation
 // discussion: URI where the discussion leading to this proposal can be found
 // kind, content, proposer: Self-explanatory
-// sensitive: Must be true if the proposal would trigger a transaction from the
-// Nation3 DAO Sensitive Agent app
+// critical: Must be true if the proposal would trigger a transaction from the
+// Nation3 DAO Critical Agent app
 // agreement: Optional since the court isn't live yet
 // votes: Contains the Snapshot vote and the Aragon vote, if there is one. They // will be added as they go live
 type Proposal = {
@@ -141,7 +140,9 @@ type Proposal = {
     | TreasuryManagementProposal
     | CustodialTreasuryManagementProposal
   proposer: Proposer
-  sensitive?: boolean
+  critical?: boolean
   agreement?: Agreement
   votes?: [SnapshotVote, Vote?]
 }
+
+export { Proposal }

@@ -69,9 +69,9 @@ On-chain enactment: 3, after 2, 2d
 6. The Meta Guild multisig creates the vote on Snapshot.
 7. The Meta Guild multisig creates the vote on Aragon.
 
-## Sensitive proposals
+## Proposals with critical impact
 
-The Nation3 DAO has an Agent app instance (called _Sensitive Agent_) governed by a Voting app with the following voting parameters:
+The Nation3 DAO has an Agent app instance (called _Critical Agent_) governed by a Voting app with the following voting parameters:
 
 - **Duration**: 168h (one full week).
 - **Platform**: [Aragon](TODO).
@@ -80,7 +80,7 @@ The Nation3 DAO has an Agent app instance (called _Sensitive Agent_) governed by
 - **Voting system**: Binary (yes/no).
 - **Voting threshold**: >66% (supermajority) approval threshold with >20% participation rate.
 
-Any proposal which would trigger a transaction from the _Sensitive Agent_ app on the Nation3 DAO must be tagged as sensitive. All sensitive proposals follow the same governance process as standard proposals, but instead of 48h for each step in the process, it's 168h (a full week).
+Any proposal which would trigger a transaction from the _Critical Agent_ app on the Nation3 DAO must be tagged as critical. All critical proposals follow the same governance process as standard proposals, but instead of 48h for each step in the process, it's 168h (a full week).
 
 ## Who can create votes
 
@@ -88,6 +88,4 @@ The [Meta Guild multisig](TODO) has permission to create votes, both in the Nati
 
 The Nation3 DAO can request changes in the signers and signing threshold of the Meta Guild multisig by passing a _Proclamation_ proposal. The Nation3 DAO can replace the Meta Guild multisig from creating votes on Aragon by passing a _Parameter Change_ proposal revoking the multisig's permission to create votes.
 
-As a backup mechanism in case of multisig malfunction, the Nation3 Proposals Backup DAO can create votes on Aragon. The Voting app installed on such DAO is configured with the exact same parameters as the _Sensitive Agent_ app, with the exception of any $veNATION holder being able to create votes on it.
-
-Add discussion link to forum to spec and also choices array
+As a backup mechanism in case of multisig malfunction, the Nation3 Proposals Backup DAO can create votes on Aragon. The Voting app installed on such DAO is configured with the exact same parameters as the _Critical Agent_ app, with the exception of any $veNATION holder being able to create votes on it.

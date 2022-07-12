@@ -4,7 +4,8 @@
   "kind": "proclamation",
   "content": {
     "statement": "The Nation3 DAO will issue a limited number of Genesis Passports as NFTs. The exact number will be decided by the outcome of this vote",
-    "snapshotVotingSystem": "single-choice"
+    "choices": ["69", "420", "1337"],
+    "votingSystem": "single-choice"
   },
   "proposer": {
     "account": "0xBAC3aB60a1643E5f5De8Eb62Cb4bb232711D9DcD",
