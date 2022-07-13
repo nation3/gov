@@ -58,8 +58,8 @@ On-chain enactment: 3, after 2, 2d
 
 ## Submitting a proposal
 
-1. Once you are ready to submit a formal proposal, go to the [Proposal Generator](TODO) to generate an encoded version.
-2. [Open a pull request](TODO) adding the proposal to this repo. Link the pull request at the end of your forum post.
+1. Once you are ready to submit a formal proposal, go to the Proposal Generator (soon) to generate an encoded version.
+2. [Open a pull request](https://github.com/nation3/governance/pull/new) adding the proposal to this repo. Link the pull request at the end of your forum post.
 3. Modify the proposal based on feedback, both in the forum and in the pull request.
 4. Once the feedback period ends, you can tag it as `frozen` on GitHub.
 5. A bot will automatically merge it after checking:
@@ -74,7 +74,7 @@ On-chain enactment: 3, after 2, 2d
 The Nation3 DAO has an Agent app instance (called _Critical Agent_) governed by a Voting app with the following voting parameters:
 
 - **Duration**: 168h (one full week).
-- **Platform**: [Aragon](TODO).
+- **Platform**: [Aragon](https://client.aragon.org/#/nation3/0xfbad11cb39f62cf5248b2d85e3fb36df99df758e/).
 - **Census**: All $veNATION holders.
 - **Voting weight**: Token-weighted by $veNATION balance.
 - **Voting system**: Binary (yes/no).
@@ -84,7 +84,7 @@ Any proposal which would trigger a transaction from the _Critical Agent_ app on 
 
 ## Who can create votes
 
-The [Meta Guild multisig](TODO) has permission to create votes, both in the Nation3 space on Snapshot and the Nation3 DAO on Aragon.
+The [Meta Guild multisig](https://gnosis-safe.io/app/eth:0x7fFf737ae9FdDD6E28Fe8B8F0F4dE69Bb8e7a885) has permission to create votes, both in the Nation3 space on Snapshot and the Nation3 DAO on Aragon.
 
 The Nation3 DAO can request changes in the signers and signing threshold of the Meta Guild multisig by passing a _Proclamation_ proposal. The Nation3 DAO can replace the Meta Guild multisig from creating votes on Aragon by passing a _Parameter Change_ proposal revoking the multisig's permission to create votes.
 
