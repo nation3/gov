@@ -1,0 +1,19 @@
+{
+  "spec": 1,
+  "id": 10,
+  "discussion": "https://forum.nation3.org/t/proposal-meta-guild-roadmap/645",
+  "kind": "expense",
+  "content": {
+    "chainId": 1,
+    "recipient": "0x7fFf737ae9FdDD6E28Fe8B8F0F4dE69Bb8e7a885",
+    "token": "0x333A4823466879eeF910A04D473505da62142069",
+    "amount": 52
+  },
+  "votes": [
+    {
+      "uri": "https://vote.nation3.org/#/proposal/0x561d1950b3349b92e0123113e27c97cafaf3675c6544fdac8610f73a9fdb6882",
+      "passed": true,
+      "outcome": ["Approve"]
+    }
+  ]
+}

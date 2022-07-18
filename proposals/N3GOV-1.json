@@ -1,0 +1,23 @@
+{
+  "spec": 1,
+  "id": 1,
+  "discussion": "https://forum.nation3.org/t/proposal-to-launch-liquidity-rewards/25",
+  "kind": "expense",
+  "content": {
+    "chainId": 1,
+    "recipient": "0x4f1e79793fD5F5805b285C3F29379b8056A4476B",
+    "token": "0x333A4823466879eeF910A04D473505da62142069",
+    "amount": 500
+  },
+  "votes": [
+    {
+      "uri": "https://vote.nation3.org/#/proposal/0xa16b04e4e9b4372f904880cdc32203bb0a2eff6c483dc05c63776302f5b428ea",
+      "passed": true,
+      "outcome": "500 $NATION over 6 months"
+    },
+    {
+      "uri": "https://client.aragon.org/#/nation3/0x92462953792d3e84af56edfc74d93e5885d38cc0/vote/14/",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "spec": 1,
+  "id": 6,
+  "discussion": "",
+  "kind": "expense",
+  "content": {
+    "chainId": 1,
+    "recipient": "0xcd18eaa163733da39c232722cbc4e8940b1d8888",
+    "token": "0x333A4823466879eeF910A04D473505da62142069",
+    "amount": 180
+  },
+  "votes": [
+    {
+      "uri": "https://vote.nation3.org/#/proposal/0x10c02c8d4922d86a2c487ff3a3f7b11bd9170b2c4caf580cf3e06bcb750af642",
+      "passed": true,
+      "outcome": "Yes"
+    },
+    {
+      "uri": "https://client.aragon.org/#/nation3/0x92462953792d3e84af56edfc74d93e5885d38cc0/vote/21/",
+      "passed": true
+    },
+    {
+      "uri": "https://client.aragon.org/#/nation3/0x92462953792d3e84af56edfc74d93e5885d38cc0/vote/22/",
+      "passed": true
+    }
+  ]
+}

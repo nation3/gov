@@ -1,0 +1,18 @@
+{
+  "spec": 1,
+  "id": 3,
+  "discussion": "https://forum.nation3.org/t/proposal-set-up-initial-rewards-guild/256",
+  "kind": "proclamation",
+  "content": {
+    "statement": "Members within the Nation3 DAO will create a Gnosis Safe to  manage rewards for contributors, with a starting budget of 5 $NATION/month. The members will be @0xGallego, @Anastasiya and @Luis plus two community members elected by the outcome of this vote.",
+    "choices": ["tooz", "raymond", "whitemountain", "Wilson Ng", "malatang"],
+    "votingSystem": "ranked-choice"
+  },
+  "votes": [
+    {
+      "uri": "https://vote.nation3.org/#/proposal/0xecc40f2a376d0d1213036389df9cd1872900bbb6758c65900ac0cefd760b10a8",
+      "passed": true,
+      "outcome": ["tooz", "raymond"]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "spec": 1,
+  "id": 8,
+  "discussion": "https://forum.nation3.org/t/proposal-renew-multi-sig-inactive-spot/694",
+  "kind": "proclamation",
+  "content": {
+    "statement": "The Nation3 DAO states that the Meta Guild multisig should replace the community member tooz with community member Aahna as multisig signatory.",
+    "choices": ["Approve", "Reject"],
+    "votingSystem": "single-choice"
+  },
+  "votes": [
+    {
+      "uri": "https://vote.nation3.org/#/proposal/0xe7f5e9107f3778f94a6cd47fdcc6a24c95064f82c609605f640168908a31b034",
+      "passed": true,
+      "outcome": "Approve"
+    },
+    {
+      "uri": "https://gnosis-safe.io/app/eth:0x7fFf737ae9FdDD6E28Fe8B8F0F4dE69Bb8e7a885/transactions/multisig_0x7fFf737ae9FdDD6E28Fe8B8F0F4dE69Bb8e7a885_0xc6f127534704ccf95339046d3a45a13ffb800c7553417a7d2a713eb4b7277711",
+      "passed": true
+    }
+  ]
+}

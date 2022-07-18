@@ -1,15 +1,20 @@
 {
   "spec": 1,
   "id": 0,
+  "discussion": "https://forum.nation3.org/t/proposal-to-issue-genesis-nft-passports/26",
   "kind": "proclamation",
   "content": {
-    "statement": "The Nation3 DAO will issue a limited number of Genesis Passports as NFTs. The exact number will be decided by the outcome of this vote",
-    "choices": ["69", "420", "1337"],
+    "statement": "The Nation3 DAO will issue a limited number of Genesis Passports as NFTs. The exact number will be decided by the outcome of this vote.",
+    "choices": [
+      "69 Genesis Passports",
+      "420 Genesis Passports",
+      "1337 Genesis Passports"
+    ],
     "votingSystem": "single-choice"
   },
   "votes": [
     {
-      "uri": "https://snapshot.org/#/nation3.eth/proposal/0x5f9d46af53c57a5f231957fd03023cd5694afdca0c4cb5b842ee31b175500f16",
+      "uri": "https://vote.nation3.org/#/proposal/0x5f9d46af53c57a5f231957fd03023cd5694afdca0c4cb5b842ee31b175500f16",
       "passed": true,
       "outcome": "420 Genesis Passports"
     }

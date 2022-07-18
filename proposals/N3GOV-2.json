@@ -1,0 +1,23 @@
+{
+  "spec": 1,
+  "id": 2,
+  "discussion": "https://forum.nation3.org/t/proposal-perform-minimal-treasury-diversification/216",
+  "kind": "custodial-treasury-management",
+  "content": {
+    "chainId": 1,
+    "recipient": "0xbac3ab60a1643e5f5de8eb62cb4bb232711d9dcd",
+    "token": "0x333A4823466879eeF910A04D473505da62142069",
+    "amount": 50
+  },
+  "votes": [
+    {
+      "uri": "https://vote.nation3.org/#/proposal/0x4d7cbc095eb9efb1ff812d6d0c7aadf86d18962ac6496211286de932249e6629",
+      "passed": true,
+      "outcome": "Withdraw 50 $NATION and 33 ETH"
+    },
+    {
+      "uri": "https://client.aragon.org/#/nation3/0x92462953792d3e84af56edfc74d93e5885d38cc0/vote/14/",
+      "passed": true
+    }
+  ]
+}

@@ -107,7 +107,7 @@ type Vote = {
 // outcome: Winning choice in Snapshot. Helpful to display together with the
 // winning statement in a proclamation proposal
 type SnapshotVote = Vote & {
-  outcome: string
+  outcome: string | Array<string>
 }
 
 // Proposal

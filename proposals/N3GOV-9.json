@@ -1,0 +1,19 @@
+{
+  "spec": 1,
+  "id": 9,
+  "discussion": "https://forum.nation3.org/t/gsr-market-making-proposal/655",
+  "kind": "custodial-treasury-management",
+  "content": {
+    "chainId": 1,
+    "recipient": "",
+    "token": "0x333A4823466879eeF910A04D473505da62142069",
+    "amount": 2104
+  },
+  "votes": [
+    {
+      "uri": "https://vote.nation3.org/#/proposal/0x88b5041835eed144d3125afb8c22d7a5235288e516af8bc7d3fe09ec17463e67",
+      "passed": true,
+      "outcome": "Yes, approve"
+    }
+  ]
+}
