@@ -86,20 +86,12 @@ type TreasuryManagementProposal = ContractCall
 // proxy, liquidations via centralized exchange
 type CustodialTreasuryManagementProposal = Transfer
 
-// Proposer of the proposal
-// account: EVM-compliant address of the proposer
-// signature: Cryptographic signature corresponding to the proposer's account
-// in which they validate their role as proposer (TODO: Specify signature type)
-type Proposer = {
-  account: Address
-  signature: string
-}
-
 // Agreement in the Nation3 jurisdiction entered by the proposer in order to
 // send a governance proposal. They can be slashed in case of breach of duties
+// Having this agreement in place also lets us extract the proposer's account
 type Agreement = {
   chainId: ChainId
-  courtVersion: number
+  agreementsContract: Address
   agreementId: number
 }
 
@@ -122,7 +114,7 @@ type SnapshotVote = Vote & {
 // spec: Version of this spec that the proposal adheres to
 // id: Numeric identifier for the proposal, assigned at the time of PR creation
 // discussion: URI where the discussion leading to this proposal can be found
-// kind, content, proposer: Self-explanatory
+// kind, content: Self-explanatory
 // critical: Must be true if the proposal would trigger a transaction from the
 // Nation3 DAO Critical Agent app
 // agreement: Optional since the court isn't live yet
@@ -139,7 +131,6 @@ type Proposal = {
     | ParameterChangeProposal
     | TreasuryManagementProposal
     | CustodialTreasuryManagementProposal
-  proposer: Proposer
   critical?: boolean
   agreement?: Agreement
   votes?: [SnapshotVote, Vote?]

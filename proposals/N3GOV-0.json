@@ -7,10 +7,6 @@
     "choices": ["69", "420", "1337"],
     "votingSystem": "single-choice"
   },
-  "proposer": {
-    "account": "0xBAC3aB60a1643E5f5De8Eb62Cb4bb232711D9DcD",
-    "signature": ""
-  },
   "votes": [
     {
       "uri": "https://snapshot.org/#/nation3.eth/proposal/0x5f9d46af53c57a5f231957fd03023cd5694afdca0c4cb5b842ee31b175500f16",
