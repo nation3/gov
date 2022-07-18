@@ -5,9 +5,9 @@
   "kind": "expense",
   "content": {
     "chainId": 1,
-    "recipient": "0xcd18eaa163733da39c232722cbc4e8940b1d8888",
-    "token": "0x333A4823466879eeF910A04D473505da62142069",
-    "amount": 180
+    "recipient": "0x7fFf737ae9FdDD6E28Fe8B8F0F4dE69Bb8e7a885",
+    "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "amount": 30000
   },
   "votes": [
     {

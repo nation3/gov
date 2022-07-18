@@ -5,7 +5,7 @@
   "kind": "expense",
   "content": {
     "chainId": 1,
-    "recipient": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "recipient": "0xbac3ab60a1643e5f5de8eb62cb4bb232711d9dcd",
     "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
     "amount": 5000
   },
