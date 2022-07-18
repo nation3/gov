@@ -5,9 +5,21 @@
   "kind": "expense",
   "content": {
     "chainId": 1,
-    "recipient": "0xcd18eaa163733da39c232722cbc4e8940b1d8888",
-    "token": "0x333A4823466879eeF910A04D473505da62142069",
-    "amount": 180
+    "target": "0xcd18eaa163733da39c232722cbc4e8940b1d8888",
+    "method": "createStream",
+    "parameters": [
+      "0x7fff737ae9fddd6e28fe8b8f0f4de69bb8e7a885",
+      179129520000000000000,
+      "0x333A4823466879eeF910A04D473505da62142069",
+      1657285200,
+      1688169600
+    ],
+    "erc20Approval": {
+      "chainId": 1,
+      "token": "0x333A4823466879eeF910A04D473505da62142069",
+      "recipient": "0xcd18eaa163733da39c232722cbc4e8940b1d8888",
+      "amount": 180
+    }
   },
   "votes": [
     {

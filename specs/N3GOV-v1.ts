@@ -9,20 +9,21 @@ type Address = string
 // Only supporting Ethereum for now
 type ChainId = 1
 
+// ERC20 transfer or approval
+type ERC20Transaction = {
+  chainId: ChainId
+  token: Address
+  recipient: Address
+  amount: number
+}
+
 // Call to a smart contract
 type ContractCall = {
   chainId: ChainId
   target: Address
   method: string
   parameters: Array<string>
-}
-
-// ERC20 transfer
-type Transfer = {
-  chainId: ChainId
-  recipient: Address
-  token: Address
-  amount: number
+  erc20Approval?: ERC20Transaction
 }
 
 // Proposal types
@@ -68,7 +69,7 @@ type ProclamationProposal = {
 
 // Proposal to transfer an ERC20 token outside of the Nation3 DAO's treasury,
 // with the expectation that it flows outside of its control
-type ExpenseProposal = Transfer
+type ExpenseProposal = ERC20Transaction | ContractCall
 
 // Proposal to perform a parameter change in one of the contracts controlled by
 // the Nation3 DAO
@@ -84,14 +85,14 @@ type TreasuryManagementProposal = ContractCall
 // third-party entity
 // Examples: Loans to legal entities, equity investments held via a legal
 // proxy, liquidations via centralized exchange
-type CustodialTreasuryManagementProposal = Transfer
+type CustodialTreasuryManagementProposal = ERC20Transaction
 
 // Agreement in the Nation3 jurisdiction entered by the proposer in order to
 // send a governance proposal. They can be slashed in case of breach of duties
 // Having this agreement in place also lets us extract the proposer's account
 type Agreement = {
   chainId: ChainId
-  agreementsContract: Address
+  agreementsFramework: Address
   agreementId: number
 }
 
@@ -118,7 +119,10 @@ type SnapshotVote = Vote & {
 // critical: Must be true if the proposal would trigger a transaction from the
 // Nation3 DAO Critical Agent app
 // agreement: Optional since the court isn't live yet
-// votes: Contains the Snapshot vote and the Aragon vote, if there is one. They // will be added as they go live
+// votes: Contains the required votes to execute on the proposal. This will be
+// the Snapshot vote and the Aragon vote (if there's one) or votes if the
+// proposal requires prior approval to send tokens. They will be added as they
+// go live
 type Proposal = {
   spec: number
   id: number
@@ -133,7 +137,7 @@ type Proposal = {
     | CustodialTreasuryManagementProposal
   critical?: boolean
   agreement?: Agreement
-  votes?: [SnapshotVote, Vote?]
+  votes?: [SnapshotVote | Vote]
 }
 
 export { Proposal }
