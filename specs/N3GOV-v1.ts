@@ -22,7 +22,7 @@ type ContractCall = {
   chainId: ChainId
   target: Address
   method: string
-  parameters: Array<string>
+  parameters: Array<string | number>
   erc20Approval?: ERC20Transaction
 }
 

@@ -1,0 +1,17 @@
+{
+  "name": "n3gov-validator",
+  "version": "1.0.0",
+  "description": "Validator to check that Nation3 governance proposals match the spec",
+  "main": "index.ts",
+  "author": "Nation3 DAO",
+  "license": "AGPL-3.0-or-later",
+  "scripts": {
+    "validate": "ts-node index.ts",
+    "generate-json-schema": "typescript-json-schema ../specs/N3GOV-v1.ts Proposal --required > N3GOV-v1.json"
+  },
+  "dependencies": {
+    "ajv": "^8.11.0",
+    "runtypes": "^6.5.1",
+    "typescript-json-schema": "^0.54.0"
+  }
+}
