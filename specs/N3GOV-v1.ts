@@ -137,7 +137,7 @@ type Proposal = {
     | CustodialTreasuryManagementProposal
   critical?: boolean
   agreement?: Agreement
-  votes?: [SnapshotVote | Vote]
+  votes?: Array<SnapshotVote | Vote>
 }
 
 export { Proposal }
