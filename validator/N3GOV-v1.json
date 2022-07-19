@@ -1,6 +1,12 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "defaultProperties": [],
     "definitions": {
+        "Address": {
+            "description": "Ethereum address",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "type": "string"
+        },
         "AlternativeSnapshotVotingSystems": {
             "enum": [
                 "approval",
@@ -8,9 +14,82 @@
                 "single-choice",
                 "weighted"
             ],
+            "title": "Voting system",
             "type": "string"
         },
+        "Array": {
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "Array_1": {
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "#/definitions/Vote",
+                        "description": "Snapshot Vote related to the proposal"
+                    },
+                    {
+                        "$ref": "#/definitions/SnapshotVote",
+                        "description": "Snapshot vote related to the proposal"
+                    }
+                ]
+            },
+            "type": "array"
+        },
+        "ChainId": {
+            "default": 1,
+            "description": "Only supporting Ethereum for now",
+            "enum": [
+                1
+            ],
+            "title": "Chain ID",
+            "type": "number"
+        },
+        "ContractCall": {
+            "$ref": "#/definitions/__type_4"
+        },
+        "Critical": {
+            "default": false,
+            "description": "Must be true if the proposal would trigger a transaction from the\nNation3 DAO Critical Agent app",
+            "title": "Critical",
+            "type": "boolean"
+        },
+        "CustodialTreasuryManagementProposal": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ERC20Transaction"
+                },
+                {
+                    "defaultProperties": [],
+                    "properties": {
+                        "kind": {
+                            "$ref": "#/definitions/Kind",
+                            "default": "custodial-treasury-management"
+                        }
+                    },
+                    "required": [
+                        "kind"
+                    ],
+                    "type": "object"
+                }
+            ],
+            "description": "Proposal to perform a treasury management operation, with the Nation3 DAO\nkeeping the legitimate ownership over the assets but holding them through a\nthird-party entity\nExamples: Loans to legal entities, equity investments held via a legal\nproxy, liquidations via centralized exchange",
+            "title": "Treasury management (custodial)"
+        },
+        "ERC20Transaction": {
+            "$ref": "#/definitions/__type_3"
+        },
+        "ERC20Transaction_1": {
+            "$ref": "#/definitions/ERC20Transaction",
+            "title": "ERC20 transfer or approval"
+        },
+        "ExpenseERC20Transaction": {
+            "$ref": "#/definitions/__type_2"
+        },
         "Kind": {
+            "description": "Proposal type",
             "enum": [
                 "custodial-treasury-management",
                 "expense",
@@ -20,235 +99,336 @@
                 "treasury-management"
             ],
             "type": "string"
-        }
-    },
-    "properties": {
-        "agreement": {
-            "properties": {
-                "agreementId": {
-                    "type": "number"
+        },
+        "MetaProposal": {
+            "$ref": "#/definitions/__type"
+        },
+        "ParameterChangeProposal": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/__type_4"
                 },
-                "agreementsFramework": {
+                {
+                    "defaultProperties": [],
+                    "properties": {
+                        "kind": {
+                            "$ref": "#/definitions/Kind",
+                            "default": "parameter-change"
+                        }
+                    },
+                    "required": [
+                        "kind"
+                    ],
+                    "type": "object"
+                }
+            ],
+            "description": "Proposal to perform a parameter change in one of the contracts controlled by\nthe Nation3 DAO",
+            "title": "Parameter change"
+        },
+        "ProclamationProposal": {
+            "$ref": "#/definitions/__type_1"
+        },
+        "SnapshotVote": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/__type_5",
+                    "description": "Snapshot Vote related to the proposal"
+                },
+                {
+                    "defaultProperties": [],
+                    "properties": {
+                        "outcome": {
+                            "anyOf": [
+                                {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array"
+                                },
+                                {
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    },
+                    "required": [
+                        "outcome"
+                    ],
+                    "type": "object"
+                }
+            ],
+            "description": "Snapshot vote related to the proposal",
+            "title": "Snapshot vote"
+        },
+        "TreasuryManagementProposal": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/__type_4"
+                },
+                {
+                    "defaultProperties": [],
+                    "properties": {
+                        "kind": {
+                            "$ref": "#/definitions/Kind",
+                            "default": "treasury-management"
+                        }
+                    },
+                    "required": [
+                        "kind"
+                    ],
+                    "type": "object"
+                }
+            ],
+            "description": "Proposal to perform an on-chain treasury management operation\nExamples: Trading on DEXes, lending, borrowing or buying options on DeFi\nprotocols, adding or removing liquidity from pools",
+            "title": "Treasury management"
+        },
+        "Vote": {
+            "$ref": "#/definitions/__type_5"
+        },
+        "__type": {
+            "defaultProperties": [],
+            "description": "Proposal that modifies the current governance process (`specs/N3GOV-v1.ts`\nand `GOVERNANCE.md`)",
+            "properties": {
+                "kind": {
+                    "$ref": "#/definitions/Kind",
+                    "default": "meta"
+                },
+                "prURI": {
+                    "description": "Link to a pull request to this repo on GitHub",
+                    "format": "uri",
+                    "title": "PR link",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "kind",
+                "prURI"
+            ],
+            "title": "Meta",
+            "type": "object"
+        },
+        "__type_1": {
+            "defaultProperties": [],
+            "description": "Proposal for the Nation3 DAO to adopt a statement",
+            "properties": {
+                "choices": {
+                    "$ref": "#/definitions/Array",
+                    "title": "Choices"
+                },
+                "kind": {
+                    "$ref": "#/definitions/Kind",
+                    "default": "proclamation"
+                },
+                "statement": {
+                    "title": "Statement",
                     "type": "string"
                 },
+                "votingSystem": {
+                    "$ref": "#/definitions/AlternativeSnapshotVotingSystems"
+                }
+            },
+            "required": [
+                "choices",
+                "kind",
+                "statement",
+                "votingSystem"
+            ],
+            "title": "Proclamation",
+            "type": "object"
+        },
+        "__type_2": {
+            "defaultProperties": [],
+            "description": "Proposal to transfer an ERC20 token outside of the Nation3 DAO's treasury,\nwith the expectation that it flows outside of its control",
+            "properties": {
+                "erc20": {
+                    "$ref": "#/definitions/ERC20Transaction"
+                }
+            },
+            "required": [
+                "erc20"
+            ],
+            "title": "Expense (ERC20 transfer)",
+            "type": "object"
+        },
+        "__type_3": {
+            "defaultProperties": [],
+            "properties": {
+                "amount": {
+                    "minimum": 0,
+                    "title": "Amount",
+                    "type": "number"
+                },
                 "chainId": {
-                    "enum": [
-                        1
-                    ],
+                    "$ref": "#/definitions/ChainId"
+                },
+                "critical": {
+                    "$ref": "#/definitions/Critical"
+                },
+                "token": {
+                    "$ref": "#/definitions/Address",
+                    "title": "Token"
+                }
+            },
+            "required": [
+                "amount",
+                "chainId",
+                "token"
+            ],
+            "title": "ERC20 transfer or approval",
+            "type": "object"
+        },
+        "__type_4": {
+            "defaultProperties": [],
+            "properties": {
+                "chainId": {
+                    "$ref": "#/definitions/ChainId"
+                },
+                "critical": {
+                    "$ref": "#/definitions/Critical"
+                },
+                "erc20Approval": {
+                    "$ref": "#/definitions/ERC20Transaction_1",
+                    "description": "ERC20 approval if the transaction requires it",
+                    "title": "ERC20 approval"
+                },
+                "method": {
+                    "title": "Method",
+                    "type": "string"
+                },
+                "parameters": {
+                    "$ref": "#/definitions/Array",
+                    "title": "Parameters"
+                },
+                "target": {
+                    "$ref": "#/definitions/Address"
+                },
+                "value": {
+                    "minimum": 0,
+                    "title": "ETH value",
                     "type": "number"
                 }
             },
             "required": [
-                "agreementId",
-                "agreementsFramework",
-                "chainId"
+                "chainId",
+                "method",
+                "parameters",
+                "target",
+                "value"
             ],
+            "title": "Smart contract call",
             "type": "object"
         },
+        "__type_5": {
+            "defaultProperties": [],
+            "description": "Snapshot Vote related to the proposal",
+            "properties": {
+                "passed": {
+                    "description": "Whether the proposal had a positive outcome or not",
+                    "title": "Passed",
+                    "type": "boolean"
+                },
+                "uri": {
+                    "description": "Full URI where the vote is accessible",
+                    "format": "uri",
+                    "title": "URI",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "passed",
+                "uri"
+            ],
+            "title": "Vote",
+            "type": "object"
+        }
+    },
+    "properties": {
         "content": {
             "anyOf": [
                 {
-                    "properties": {
-                        "amount": {
-                            "type": "number"
-                        },
-                        "chainId": {
-                            "enum": [
-                                1
-                            ],
-                            "type": "number"
-                        },
-                        "recipient": {
-                            "type": "string"
-                        },
-                        "token": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "amount",
-                        "chainId",
-                        "recipient",
-                        "token"
-                    ],
-                    "type": "object"
+                    "$ref": "#/definitions/MetaProposal",
+                    "description": "Proposal that modifies the current governance process (`specs/N3GOV-v1.ts`\nand `GOVERNANCE.md`)"
                 },
                 {
-                    "properties": {
-                        "chainId": {
-                            "enum": [
-                                1
-                            ],
-                            "type": "number"
-                        },
-                        "erc20Approval": {
+                    "$ref": "#/definitions/ProclamationProposal",
+                    "description": "Proposal for the Nation3 DAO to adopt a statement"
+                },
+                {
+                    "$ref": "#/definitions/ExpenseERC20Transaction",
+                    "description": "Proposal to transfer an ERC20 token outside of the Nation3 DAO's treasury,\nwith the expectation that it flows outside of its control"
+                },
+                {
+                    "allOf": [
+                        {
+                            "defaultProperties": [],
+                            "description": "Proposal to transfer an ERC20 token outside of the Nation3 DAO's treasury,\nwith the expectation that it flows outside of its control",
                             "properties": {
-                                "amount": {
-                                    "type": "number"
-                                },
-                                "chainId": {
-                                    "enum": [
-                                        1
-                                    ],
-                                    "type": "number"
-                                },
-                                "recipient": {
-                                    "type": "string"
-                                },
-                                "token": {
-                                    "type": "string"
+                                "call": {
+                                    "$ref": "#/definitions/ContractCall"
                                 }
                             },
                             "required": [
-                                "amount",
-                                "chainId",
-                                "recipient",
-                                "token"
+                                "call"
                             ],
+                            "title": "Expense (contract call)",
                             "type": "object"
                         },
-                        "method": {
-                            "type": "string"
-                        },
-                        "parameters": {
-                            "items": {
-                                "type": [
-                                    "string",
-                                    "number"
-                                ]
+                        {
+                            "defaultProperties": [],
+                            "properties": {
+                                "kind": {
+                                    "$ref": "#/definitions/Kind",
+                                    "default": "expense"
+                                }
                             },
-                            "type": "array"
-                        },
-                        "target": {
-                            "type": "string"
+                            "required": [
+                                "kind"
+                            ],
+                            "type": "object"
                         }
-                    },
-                    "required": [
-                        "chainId",
-                        "method",
-                        "parameters",
-                        "target"
-                    ],
-                    "type": "object"
+                    ]
                 },
                 {
-                    "properties": {
-                        "prURI": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "prURI"
-                    ],
-                    "type": "object"
+                    "$ref": "#/definitions/ParameterChangeProposal",
+                    "description": "Proposal to perform a parameter change in one of the contracts controlled by\nthe Nation3 DAO"
                 },
                 {
-                    "properties": {
-                        "choices": {
-                            "items": {
-                                "type": "string"
-                            },
-                            "type": "array"
-                        },
-                        "statement": {
-                            "type": "string"
-                        },
-                        "votingSystem": {
-                            "$ref": "#/definitions/AlternativeSnapshotVotingSystems"
-                        }
-                    },
-                    "required": [
-                        "choices",
-                        "statement",
-                        "votingSystem"
-                    ],
-                    "type": "object"
+                    "$ref": "#/definitions/TreasuryManagementProposal",
+                    "description": "Proposal to perform an on-chain treasury management operation\nExamples: Trading on DEXes, lending, borrowing or buying options on DeFi\nprotocols, adding or removing liquidity from pools"
+                },
+                {
+                    "$ref": "#/definitions/CustodialTreasuryManagementProposal",
+                    "description": "Proposal to perform a treasury management operation, with the Nation3 DAO\nkeeping the legitimate ownership over the assets but holding them through a\nthird-party entity\nExamples: Loans to legal entities, equity investments held via a legal\nproxy, liquidations via centralized exchange"
                 }
             ]
         },
-        "critical": {
-            "type": "boolean"
-        },
         "discussion": {
+            "description": "URI where the discussion leading to this proposal can be found",
+            "format": "uri",
+            "title": "Discussion",
             "type": "string"
         },
         "id": {
+            "description": "Numeric identifier for the proposal, assigned at the time of PR creation",
+            "minimum": 0,
+            "title": "ID of the proposal",
             "type": "number"
         },
-        "kind": {
-            "$ref": "#/definitions/Kind"
-        },
         "spec": {
+            "default": 1,
+            "description": "Version of this spec that the proposal adheres to",
+            "minimum": 0,
+            "title": "Specification",
             "type": "number"
         },
         "votes": {
-            "items": {
-                "anyOf": [
-                    {
-                        "properties": {
-                            "passed": {
-                                "type": "boolean"
-                            },
-                            "uri": {
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "passed",
-                            "uri"
-                        ],
-                        "type": "object"
-                    },
-                    {
-                        "allOf": [
-                            {
-                                "properties": {
-                                    "passed": {
-                                        "type": "boolean"
-                                    },
-                                    "uri": {
-                                        "type": "string"
-                                    }
-                                },
-                                "required": [
-                                    "passed",
-                                    "uri"
-                                ],
-                                "type": "object"
-                            },
-                            {
-                                "properties": {
-                                    "outcome": {
-                                        "anyOf": [
-                                            {
-                                                "items": {
-                                                    "type": "string"
-                                                },
-                                                "type": "array"
-                                            },
-                                            {
-                                                "type": "string"
-                                            }
-                                        ]
-                                    }
-                                },
-                                "required": [
-                                    "outcome"
-                                ],
-                                "type": "object"
-                            }
-                        ]
-                    }
-                ]
-            },
-            "type": "array"
+            "$ref": "#/definitions/Array_1"
         }
     },
     "required": [
         "content",
         "discussion",
         "id",
-        "kind",
         "spec"
     ],
     "type": "object"

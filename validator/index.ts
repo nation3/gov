@@ -1,7 +1,9 @@
 import fs from 'fs'
 import Ajv from 'ajv'
+import addFormats from 'ajv-formats'
 
 const ajv = new Ajv()
+addFormats(ajv)
 
 const schema = JSON.parse(fs.readFileSync('./N3GOV-v1.json', 'utf8'))
 
