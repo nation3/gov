@@ -29,10 +29,7 @@
                         "$ref": "#/definitions/ERC20Transfer"
                     },
                     {
-                        "$ref": "#/definitions/ERC20Approval"
-                    },
-                    {
-                        "$ref": "#/definitions/ContractCall"
+                        "$ref": "#/definitions/ExpenseWithApprovalAndCall"
                     }
                 ]
             },
@@ -40,7 +37,58 @@
         },
         "Array_2": {
             "items": {
-                "$ref": "#/definitions/ContractCall"
+                "allOf": [
+                    {
+                        "properties": {
+                            "chainId": {
+                                "$ref": "#/definitions/ChainId"
+                            },
+                            "from": {
+                                "$ref": "#/definitions/DAOAgents"
+                            }
+                        },
+                        "required": [
+                            "chainId",
+                            "from"
+                        ],
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "kind": {
+                                "$ref": "#/definitions/TransactionKind.ContractCall",
+                                "default": "contract-call"
+                            },
+                            "method": {
+                                "title": "Method",
+                                "type": "string"
+                            },
+                            "parameters": {
+                                "$ref": "#/definitions/Array",
+                                "title": "Parameters"
+                            },
+                            "to": {
+                                "$ref": "#/definitions/Address",
+                                "title": "Address to send the transaction to"
+                            },
+                            "value": {
+                                "default": 0,
+                                "minimum": 0,
+                                "title": "ETH value",
+                                "type": "number"
+                            }
+                        },
+                        "required": [
+                            "kind",
+                            "method",
+                            "parameters",
+                            "to",
+                            "value"
+                        ],
+                        "type": "object"
+                    }
+                ],
+                "title": "Smart contract call"
             },
             "type": "array"
         },
@@ -74,60 +122,6 @@
             "title": "Chain ID",
             "type": "number"
         },
-        "ContractCall": {
-            "allOf": [
-                {
-                    "properties": {
-                        "chainId": {
-                            "$ref": "#/definitions/ChainId"
-                        },
-                        "from": {
-                            "$ref": "#/definitions/DAOAgents"
-                        },
-                        "to": {
-                            "$ref": "#/definitions/Address",
-                            "title": "Address to send the transaction to"
-                        }
-                    },
-                    "required": [
-                        "chainId",
-                        "from",
-                        "to"
-                    ],
-                    "type": "object"
-                },
-                {
-                    "properties": {
-                        "kind": {
-                            "$ref": "#/definitions/TransactionKind.ContractCall",
-                            "default": "contract-call"
-                        },
-                        "method": {
-                            "title": "Method",
-                            "type": "string"
-                        },
-                        "parameters": {
-                            "$ref": "#/definitions/Array",
-                            "title": "Parameters"
-                        },
-                        "value": {
-                            "default": 0,
-                            "minimum": 0,
-                            "title": "ETH value",
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "kind",
-                        "method",
-                        "parameters",
-                        "value"
-                    ],
-                    "type": "object"
-                }
-            ],
-            "title": "Smart contract call"
-        },
         "CustodialTreasuryManagementProposal": {
             "$ref": "#/definitions/__type_5"
         },
@@ -139,34 +133,6 @@
             "title": "DAO Agent triggering the transaction",
             "type": "string"
         },
-        "ERC20Approval": {
-            "allOf": [
-                {
-                    "$ref": "#/definitions/Omit<ERC20Transfer,\"to\">"
-                },
-                {
-                    "properties": {
-                        "finalAmountUsed": {
-                            "type": "number"
-                        },
-                        "kind": {
-                            "$ref": "#/definitions/TransactionKind.ERC20Approval",
-                            "default": "erc20-approval"
-                        },
-                        "spender": {
-                            "$ref": "#/definitions/Address",
-                            "title": "Spender"
-                        }
-                    },
-                    "required": [
-                        "kind",
-                        "spender"
-                    ],
-                    "type": "object"
-                }
-            ],
-            "title": "ERC20 approval"
-        },
         "ERC20Transfer": {
             "allOf": [
                 {
@@ -176,16 +142,11 @@
                         },
                         "from": {
                             "$ref": "#/definitions/DAOAgents"
-                        },
-                        "to": {
-                            "$ref": "#/definitions/Address",
-                            "title": "Address to send the transaction to"
                         }
                     },
                     "required": [
                         "chainId",
-                        "from",
-                        "to"
+                        "from"
                     ],
                     "type": "object"
                 },
@@ -196,10 +157,6 @@
                             "title": "Amount",
                             "type": "number"
                         },
-                        "kind": {
-                            "$ref": "#/definitions/TransactionKind.ERC20Transfer",
-                            "default": "erc20-transfer"
-                        },
                         "token": {
                             "$ref": "#/definitions/Address",
                             "title": "Token"
@@ -207,8 +164,24 @@
                     },
                     "required": [
                         "amount",
-                        "kind",
                         "token"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "kind": {
+                            "$ref": "#/definitions/TransactionKind.ERC20Transfer",
+                            "default": "erc20-transfer"
+                        },
+                        "recipient": {
+                            "$ref": "#/definitions/Address",
+                            "title": "Recipient"
+                        }
+                    },
+                    "required": [
+                        "kind",
+                        "recipient"
                     ],
                     "type": "object"
                 }
@@ -217,6 +190,126 @@
         },
         "ExpenseProposal": {
             "$ref": "#/definitions/__type_2"
+        },
+        "ExpenseWithApprovalAndCall": {
+            "items": [
+                {
+                    "allOf": [
+                        {
+                            "properties": {
+                                "chainId": {
+                                    "$ref": "#/definitions/ChainId"
+                                },
+                                "from": {
+                                    "$ref": "#/definitions/DAOAgents"
+                                }
+                            },
+                            "required": [
+                                "chainId",
+                                "from"
+                            ],
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "amount": {
+                                    "minimum": 0,
+                                    "title": "Amount",
+                                    "type": "number"
+                                },
+                                "token": {
+                                    "$ref": "#/definitions/Address",
+                                    "title": "Token"
+                                }
+                            },
+                            "required": [
+                                "amount",
+                                "token"
+                            ],
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "finalAmountUsed": {
+                                    "type": "number"
+                                },
+                                "kind": {
+                                    "$ref": "#/definitions/TransactionKind.ERC20Approval",
+                                    "default": "erc20-approval"
+                                },
+                                "spender": {
+                                    "$ref": "#/definitions/Address",
+                                    "title": "Spender"
+                                }
+                            },
+                            "required": [
+                                "kind",
+                                "spender"
+                            ],
+                            "type": "object"
+                        }
+                    ],
+                    "title": "ERC20 approval"
+                },
+                {
+                    "allOf": [
+                        {
+                            "properties": {
+                                "chainId": {
+                                    "$ref": "#/definitions/ChainId"
+                                },
+                                "from": {
+                                    "$ref": "#/definitions/DAOAgents"
+                                }
+                            },
+                            "required": [
+                                "chainId",
+                                "from"
+                            ],
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "kind": {
+                                    "$ref": "#/definitions/TransactionKind.ContractCall",
+                                    "default": "contract-call"
+                                },
+                                "method": {
+                                    "title": "Method",
+                                    "type": "string"
+                                },
+                                "parameters": {
+                                    "$ref": "#/definitions/Array",
+                                    "title": "Parameters"
+                                },
+                                "to": {
+                                    "$ref": "#/definitions/Address",
+                                    "title": "Address to send the transaction to"
+                                },
+                                "value": {
+                                    "default": 0,
+                                    "minimum": 0,
+                                    "title": "ETH value",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "kind",
+                                "method",
+                                "parameters",
+                                "to",
+                                "value"
+                            ],
+                            "type": "object"
+                        }
+                    ],
+                    "title": "Smart contract call"
+                }
+            ],
+            "maxItems": 2,
+            "minItems": 2,
+            "title": "Expense (with approval and call)",
+            "type": "array"
         },
         "Kind.CustodialTreasuryManagement": {
             "enum": [
@@ -256,37 +349,6 @@
         },
         "MetaProposal": {
             "$ref": "#/definitions/__type"
-        },
-        "Omit<ERC20Transfer,\"to\">": {
-            "properties": {
-                "amount": {
-                    "minimum": 0,
-                    "title": "Amount",
-                    "type": "number"
-                },
-                "chainId": {
-                    "$ref": "#/definitions/ChainId"
-                },
-                "from": {
-                    "$ref": "#/definitions/DAOAgents"
-                },
-                "kind": {
-                    "$ref": "#/definitions/TransactionKind.ERC20Transfer",
-                    "default": "erc20-transfer"
-                },
-                "token": {
-                    "$ref": "#/definitions/Address",
-                    "title": "Token"
-                }
-            },
-            "required": [
-                "amount",
-                "chainId",
-                "from",
-                "kind",
-                "token"
-            ],
-            "type": "object"
         },
         "ParameterChangeProposal": {
             "$ref": "#/definitions/__type_3"

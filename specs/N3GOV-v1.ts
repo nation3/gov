@@ -37,20 +37,12 @@ enum TransactionKind {
 type OnChainTransaction = {
   chainId: ChainId
   from: DAOAgents
-  /**
-   * @title Address to send the transaction to
-   */
-  to: Address
 }
 
 /**
- * @title ERC20 transfer
+ * @title ERC20 transaction
  */
-type ERC20Transfer = OnChainTransaction & {
-  /**
-   * @default erc20-transfer
-   */
-  kind: TransactionKind.ERC20Transfer
+type ERC20Transaction = OnChainTransaction & {
   /**
    * @title Token
    */
@@ -63,9 +55,23 @@ type ERC20Transfer = OnChainTransaction & {
 }
 
 /**
+ * @title ERC20 transfer
+ */
+type ERC20Transfer = ERC20Transaction & {
+  /**
+   * @default erc20-transfer
+   */
+  kind: TransactionKind.ERC20Transfer
+  /**
+   * @title Recipient
+   */
+  recipient: Address
+}
+
+/**
  * @title ERC20 approval
  */
-type ERC20Approval = Omit<ERC20Transfer, 'to'> & {
+type ERC20Approval = ERC20Transaction & {
   /**
    * @default erc20-approval
    */
@@ -85,6 +91,10 @@ type ContractCall = OnChainTransaction & {
    * @default contract-call
    */
   kind: TransactionKind.ContractCall
+  /**
+   * @title Address to send the transaction to
+   */
+  to: Address
   /**
    * @title Method
    */
@@ -170,6 +180,12 @@ type ProclamationProposal = {
 }
 
 // On-chain proposal types
+
+/**
+ * @title Expense (with approval and call)
+ */
+type ExpenseWithApprovalAndCall = [ERC20Approval, ContractCall]
+
 /**
  * Proposal to transfer, approve or interact with a contract moving an ERC20
  * token outside of the Nation3 DAO's treasury, with the expectation that it
@@ -181,7 +197,7 @@ type ExpenseProposal = {
    * @default expense
    */
   kind: Kind.Expense
-  calls: Array<ERC20Transfer | ERC20Approval | ContractCall>
+  calls: Array<ERC20Transfer | ExpenseWithApprovalAndCall>
 }
 /**
  * Proposal to perform a parameter change in one of the contracts controlled by
