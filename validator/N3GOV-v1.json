@@ -1,6 +1,5 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "defaultProperties": [],
     "definitions": {
         "Address": {
             "description": "Ethereum address",
@@ -27,6 +26,34 @@
             "items": {
                 "anyOf": [
                     {
+                        "$ref": "#/definitions/ERC20Transfer"
+                    },
+                    {
+                        "$ref": "#/definitions/ERC20Approval"
+                    },
+                    {
+                        "$ref": "#/definitions/ContractCall"
+                    }
+                ]
+            },
+            "type": "array"
+        },
+        "Array_2": {
+            "items": {
+                "$ref": "#/definitions/ContractCall"
+            },
+            "type": "array"
+        },
+        "Array_3": {
+            "items": {
+                "$ref": "#/definitions/ERC20Transfer"
+            },
+            "type": "array"
+        },
+        "Array_4": {
+            "items": {
+                "anyOf": [
+                    {
                         "$ref": "#/definitions/Vote",
                         "description": "Snapshot Vote related to the proposal"
                     },
@@ -48,54 +75,181 @@
             "type": "number"
         },
         "ContractCall": {
-            "$ref": "#/definitions/__type_4"
-        },
-        "Critical": {
-            "default": false,
-            "description": "Must be true if the proposal would trigger a transaction from the\nNation3 DAO Critical Agent app",
-            "title": "Critical",
-            "type": "boolean"
-        },
-        "CustodialTreasuryManagementProposal": {
             "allOf": [
                 {
-                    "$ref": "#/definitions/ERC20Transaction"
-                },
-                {
-                    "defaultProperties": [],
                     "properties": {
-                        "kind": {
-                            "$ref": "#/definitions/Kind",
-                            "default": "custodial-treasury-management"
+                        "chainId": {
+                            "$ref": "#/definitions/ChainId"
+                        },
+                        "from": {
+                            "$ref": "#/definitions/DAOAgents"
+                        },
+                        "to": {
+                            "$ref": "#/definitions/Address",
+                            "title": "Address to send the transaction to"
                         }
                     },
                     "required": [
-                        "kind"
+                        "chainId",
+                        "from",
+                        "to"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "kind": {
+                            "$ref": "#/definitions/TransactionKind.ContractCall",
+                            "default": "contract-call"
+                        },
+                        "method": {
+                            "title": "Method",
+                            "type": "string"
+                        },
+                        "parameters": {
+                            "$ref": "#/definitions/Array",
+                            "title": "Parameters"
+                        },
+                        "value": {
+                            "default": 0,
+                            "minimum": 0,
+                            "title": "ETH value",
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "kind",
+                        "method",
+                        "parameters",
+                        "value"
                     ],
                     "type": "object"
                 }
             ],
-            "description": "Proposal to perform a treasury management operation, with the Nation3 DAO\nkeeping the legitimate ownership over the assets but holding them through a\nthird-party entity\nExamples: Loans to legal entities, equity investments held via a legal\nproxy, liquidations via centralized exchange",
-            "title": "Treasury management (custodial)"
+            "title": "Smart contract call"
         },
-        "ERC20Transaction": {
-            "$ref": "#/definitions/__type_3"
+        "CustodialTreasuryManagementProposal": {
+            "$ref": "#/definitions/__type_5"
         },
-        "ERC20Transaction_1": {
-            "$ref": "#/definitions/ERC20Transaction",
-            "title": "ERC20 transfer or approval"
+        "DAOAgents": {
+            "enum": [
+                "0x336252602b3a8a0be336ed942228305173e8082b",
+                "0x7b81e8d4e82796c9b76284fa4d21e57b8b86a06c"
+            ],
+            "title": "DAO Agent triggering the transaction",
+            "type": "string"
         },
-        "ExpenseERC20Transaction": {
+        "ERC20Approval": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Omit<ERC20Transfer,\"to\">"
+                },
+                {
+                    "properties": {
+                        "finalAmountUsed": {
+                            "type": "number"
+                        },
+                        "kind": {
+                            "$ref": "#/definitions/TransactionKind.ERC20Approval",
+                            "default": "erc20-approval"
+                        },
+                        "spender": {
+                            "$ref": "#/definitions/Address",
+                            "title": "Spender"
+                        }
+                    },
+                    "required": [
+                        "kind",
+                        "spender"
+                    ],
+                    "type": "object"
+                }
+            ],
+            "title": "ERC20 approval"
+        },
+        "ERC20Transfer": {
+            "allOf": [
+                {
+                    "properties": {
+                        "chainId": {
+                            "$ref": "#/definitions/ChainId"
+                        },
+                        "from": {
+                            "$ref": "#/definitions/DAOAgents"
+                        },
+                        "to": {
+                            "$ref": "#/definitions/Address",
+                            "title": "Address to send the transaction to"
+                        }
+                    },
+                    "required": [
+                        "chainId",
+                        "from",
+                        "to"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "amount": {
+                            "minimum": 0,
+                            "title": "Amount",
+                            "type": "number"
+                        },
+                        "kind": {
+                            "$ref": "#/definitions/TransactionKind.ERC20Transfer",
+                            "default": "erc20-transfer"
+                        },
+                        "token": {
+                            "$ref": "#/definitions/Address",
+                            "title": "Token"
+                        }
+                    },
+                    "required": [
+                        "amount",
+                        "kind",
+                        "token"
+                    ],
+                    "type": "object"
+                }
+            ],
+            "title": "ERC20 transfer"
+        },
+        "ExpenseProposal": {
             "$ref": "#/definitions/__type_2"
         },
-        "Kind": {
-            "description": "Proposal type",
+        "Kind.CustodialTreasuryManagement": {
             "enum": [
-                "custodial-treasury-management",
-                "expense",
-                "meta",
-                "parameter-change",
-                "proclamation",
+                "custodial-treasury-management"
+            ],
+            "type": "string"
+        },
+        "Kind.Expense": {
+            "enum": [
+                "expense"
+            ],
+            "type": "string"
+        },
+        "Kind.Meta": {
+            "enum": [
+                "meta"
+            ],
+            "type": "string"
+        },
+        "Kind.ParameterChange": {
+            "enum": [
+                "parameter-change"
+            ],
+            "type": "string"
+        },
+        "Kind.Proclamation": {
+            "enum": [
+                "proclamation"
+            ],
+            "type": "string"
+        },
+        "Kind.TreasuryManagement": {
+            "enum": [
                 "treasury-management"
             ],
             "type": "string"
@@ -103,27 +257,39 @@
         "MetaProposal": {
             "$ref": "#/definitions/__type"
         },
-        "ParameterChangeProposal": {
-            "allOf": [
-                {
-                    "$ref": "#/definitions/__type_4"
+        "Omit<ERC20Transfer,\"to\">": {
+            "properties": {
+                "amount": {
+                    "minimum": 0,
+                    "title": "Amount",
+                    "type": "number"
                 },
-                {
-                    "defaultProperties": [],
-                    "properties": {
-                        "kind": {
-                            "$ref": "#/definitions/Kind",
-                            "default": "parameter-change"
-                        }
-                    },
-                    "required": [
-                        "kind"
-                    ],
-                    "type": "object"
+                "chainId": {
+                    "$ref": "#/definitions/ChainId"
+                },
+                "from": {
+                    "$ref": "#/definitions/DAOAgents"
+                },
+                "kind": {
+                    "$ref": "#/definitions/TransactionKind.ERC20Transfer",
+                    "default": "erc20-transfer"
+                },
+                "token": {
+                    "$ref": "#/definitions/Address",
+                    "title": "Token"
                 }
+            },
+            "required": [
+                "amount",
+                "chainId",
+                "from",
+                "kind",
+                "token"
             ],
-            "description": "Proposal to perform a parameter change in one of the contracts controlled by\nthe Nation3 DAO",
-            "title": "Parameter change"
+            "type": "object"
+        },
+        "ParameterChangeProposal": {
+            "$ref": "#/definitions/__type_3"
         },
         "ProclamationProposal": {
             "$ref": "#/definitions/__type_1"
@@ -131,11 +297,10 @@
         "SnapshotVote": {
             "allOf": [
                 {
-                    "$ref": "#/definitions/__type_5",
+                    "$ref": "#/definitions/__type_6",
                     "description": "Snapshot Vote related to the proposal"
                 },
                 {
-                    "defaultProperties": [],
                     "properties": {
                         "outcome": {
                             "anyOf": [
@@ -160,37 +325,35 @@
             "description": "Snapshot vote related to the proposal",
             "title": "Snapshot vote"
         },
-        "TreasuryManagementProposal": {
-            "allOf": [
-                {
-                    "$ref": "#/definitions/__type_4"
-                },
-                {
-                    "defaultProperties": [],
-                    "properties": {
-                        "kind": {
-                            "$ref": "#/definitions/Kind",
-                            "default": "treasury-management"
-                        }
-                    },
-                    "required": [
-                        "kind"
-                    ],
-                    "type": "object"
-                }
+        "TransactionKind.ContractCall": {
+            "enum": [
+                "contract-call"
             ],
-            "description": "Proposal to perform an on-chain treasury management operation\nExamples: Trading on DEXes, lending, borrowing or buying options on DeFi\nprotocols, adding or removing liquidity from pools",
-            "title": "Treasury management"
+            "type": "string"
+        },
+        "TransactionKind.ERC20Approval": {
+            "enum": [
+                "erc20-approval"
+            ],
+            "type": "string"
+        },
+        "TransactionKind.ERC20Transfer": {
+            "enum": [
+                "erc20-transfer"
+            ],
+            "type": "string"
+        },
+        "TreasuryManagementProposal": {
+            "$ref": "#/definitions/__type_4"
         },
         "Vote": {
-            "$ref": "#/definitions/__type_5"
+            "$ref": "#/definitions/__type_6"
         },
         "__type": {
-            "defaultProperties": [],
             "description": "Proposal that modifies the current governance process (`specs/N3GOV-v1.ts`\nand `GOVERNANCE.md`)",
             "properties": {
                 "kind": {
-                    "$ref": "#/definitions/Kind",
+                    "$ref": "#/definitions/Kind.Meta",
                     "default": "meta"
                 },
                 "prURI": {
@@ -208,7 +371,6 @@
             "type": "object"
         },
         "__type_1": {
-            "defaultProperties": [],
             "description": "Proposal for the Nation3 DAO to adopt a statement",
             "properties": {
                 "choices": {
@@ -216,7 +378,7 @@
                     "title": "Choices"
                 },
                 "kind": {
-                    "$ref": "#/definitions/Kind",
+                    "$ref": "#/definitions/Kind.Proclamation",
                     "default": "proclamation"
                 },
                 "statement": {
@@ -237,89 +399,78 @@
             "type": "object"
         },
         "__type_2": {
-            "defaultProperties": [],
-            "description": "Proposal to transfer an ERC20 token outside of the Nation3 DAO's treasury,\nwith the expectation that it flows outside of its control",
+            "description": "Proposal to transfer, approve or interact with a contract moving an ERC20\ntoken outside of the Nation3 DAO's treasury, with the expectation that it\nflows outside of its control",
             "properties": {
-                "erc20": {
-                    "$ref": "#/definitions/ERC20Transaction"
+                "calls": {
+                    "$ref": "#/definitions/Array_1"
+                },
+                "kind": {
+                    "$ref": "#/definitions/Kind.Expense",
+                    "default": "expense"
                 }
             },
             "required": [
-                "erc20"
+                "calls",
+                "kind"
             ],
-            "title": "Expense (ERC20 transfer)",
+            "title": "Expense",
             "type": "object"
         },
         "__type_3": {
-            "defaultProperties": [],
+            "description": "Proposal to perform a parameter change in one of the contracts controlled by\nthe Nation3 DAO",
             "properties": {
-                "amount": {
-                    "minimum": 0,
-                    "title": "Amount",
-                    "type": "number"
+                "calls": {
+                    "$ref": "#/definitions/Array_2"
                 },
-                "chainId": {
-                    "$ref": "#/definitions/ChainId"
-                },
-                "critical": {
-                    "$ref": "#/definitions/Critical"
-                },
-                "token": {
-                    "$ref": "#/definitions/Address",
-                    "title": "Token"
+                "kind": {
+                    "$ref": "#/definitions/Kind.ParameterChange",
+                    "default": "parameter-change"
                 }
             },
             "required": [
-                "amount",
-                "chainId",
-                "token"
+                "calls",
+                "kind"
             ],
-            "title": "ERC20 transfer or approval",
+            "title": "Parameter change",
             "type": "object"
         },
         "__type_4": {
-            "defaultProperties": [],
+            "description": "Proposal to perform an on-chain treasury management operation.\nExamples: Trading on DEXes, lending, borrowing or buying options on DeFi\nprotocols, adding or removing liquidity from pools",
             "properties": {
-                "chainId": {
-                    "$ref": "#/definitions/ChainId"
+                "calls": {
+                    "$ref": "#/definitions/Array_2"
                 },
-                "critical": {
-                    "$ref": "#/definitions/Critical"
-                },
-                "erc20Approval": {
-                    "$ref": "#/definitions/ERC20Transaction_1",
-                    "description": "ERC20 approval if the transaction requires it",
-                    "title": "ERC20 approval"
-                },
-                "method": {
-                    "title": "Method",
-                    "type": "string"
-                },
-                "parameters": {
-                    "$ref": "#/definitions/Array",
-                    "title": "Parameters"
-                },
-                "target": {
-                    "$ref": "#/definitions/Address"
-                },
-                "value": {
-                    "minimum": 0,
-                    "title": "ETH value",
-                    "type": "number"
+                "kind": {
+                    "$ref": "#/definitions/Kind.TreasuryManagement",
+                    "default": "treasury-management"
                 }
             },
             "required": [
-                "chainId",
-                "method",
-                "parameters",
-                "target",
-                "value"
+                "calls",
+                "kind"
             ],
-            "title": "Smart contract call",
+            "title": "Treasury management",
             "type": "object"
         },
         "__type_5": {
-            "defaultProperties": [],
+            "description": "Proposal to perform a treasury management operation, with the Nation3 DAO\nkeeping the legitimate ownership over the assets but holding them through a\nthird-party entity.\nExamples: Loans to legal entities, equity investments held via a legal\nproxy, liquidations via centralized exchange",
+            "properties": {
+                "calls": {
+                    "$ref": "#/definitions/Array_3"
+                },
+                "kind": {
+                    "$ref": "#/definitions/Kind.CustodialTreasuryManagement",
+                    "default": "custodial-treasury-management"
+                }
+            },
+            "required": [
+                "calls",
+                "kind"
+            ],
+            "title": "Treasury management (custodial)",
+            "type": "object"
+        },
+        "__type_6": {
             "description": "Snapshot Vote related to the proposal",
             "properties": {
                 "passed": {
@@ -354,39 +505,8 @@
                     "description": "Proposal for the Nation3 DAO to adopt a statement"
                 },
                 {
-                    "$ref": "#/definitions/ExpenseERC20Transaction",
-                    "description": "Proposal to transfer an ERC20 token outside of the Nation3 DAO's treasury,\nwith the expectation that it flows outside of its control"
-                },
-                {
-                    "allOf": [
-                        {
-                            "defaultProperties": [],
-                            "description": "Proposal to transfer an ERC20 token outside of the Nation3 DAO's treasury,\nwith the expectation that it flows outside of its control",
-                            "properties": {
-                                "call": {
-                                    "$ref": "#/definitions/ContractCall"
-                                }
-                            },
-                            "required": [
-                                "call"
-                            ],
-                            "title": "Expense (contract call)",
-                            "type": "object"
-                        },
-                        {
-                            "defaultProperties": [],
-                            "properties": {
-                                "kind": {
-                                    "$ref": "#/definitions/Kind",
-                                    "default": "expense"
-                                }
-                            },
-                            "required": [
-                                "kind"
-                            ],
-                            "type": "object"
-                        }
-                    ]
+                    "$ref": "#/definitions/ExpenseProposal",
+                    "description": "Proposal to transfer, approve or interact with a contract moving an ERC20\ntoken outside of the Nation3 DAO's treasury, with the expectation that it\nflows outside of its control"
                 },
                 {
                     "$ref": "#/definitions/ParameterChangeProposal",
@@ -394,11 +514,11 @@
                 },
                 {
                     "$ref": "#/definitions/TreasuryManagementProposal",
-                    "description": "Proposal to perform an on-chain treasury management operation\nExamples: Trading on DEXes, lending, borrowing or buying options on DeFi\nprotocols, adding or removing liquidity from pools"
+                    "description": "Proposal to perform an on-chain treasury management operation.\nExamples: Trading on DEXes, lending, borrowing or buying options on DeFi\nprotocols, adding or removing liquidity from pools"
                 },
                 {
                     "$ref": "#/definitions/CustodialTreasuryManagementProposal",
-                    "description": "Proposal to perform a treasury management operation, with the Nation3 DAO\nkeeping the legitimate ownership over the assets but holding them through a\nthird-party entity\nExamples: Loans to legal entities, equity investments held via a legal\nproxy, liquidations via centralized exchange"
+                    "description": "Proposal to perform a treasury management operation, with the Nation3 DAO\nkeeping the legitimate ownership over the assets but holding them through a\nthird-party entity.\nExamples: Loans to legal entities, equity investments held via a legal\nproxy, liquidations via centralized exchange"
                 }
             ]
         },
@@ -422,7 +542,7 @@
             "type": "number"
         },
         "votes": {
-            "$ref": "#/definitions/Array_1"
+            "$ref": "#/definitions/Array_4"
         }
     },
     "required": [
