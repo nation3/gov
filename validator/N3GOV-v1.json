@@ -6,16 +6,6 @@
             "pattern": "^0x[a-fA-F0-9]{40}$",
             "type": "string"
         },
-        "AlternativeSnapshotVotingSystems": {
-            "enum": [
-                "approval",
-                "ranked-choice",
-                "single-choice",
-                "weighted"
-            ],
-            "title": "Voting system",
-            "type": "string"
-        },
         "Array": {
             "items": {
                 "type": "string"
@@ -24,14 +14,57 @@
         },
         "Array_1": {
             "items": {
-                "anyOf": [
+                "allOf": [
                     {
-                        "$ref": "#/definitions/ERC20Transfer"
+                        "properties": {
+                            "chainId": {
+                                "$ref": "#/definitions/ChainId"
+                            },
+                            "from": {
+                                "$ref": "#/definitions/DAOAgents"
+                            }
+                        },
+                        "required": [
+                            "chainId",
+                            "from"
+                        ],
+                        "type": "object"
                     },
                     {
-                        "$ref": "#/definitions/ExpenseWithApprovalAndCall"
+                        "properties": {
+                            "amount": {
+                                "minimum": 0,
+                                "title": "Amount",
+                                "type": "number"
+                            },
+                            "kind": {
+                                "$ref": "#/definitions/TransactionKind.ERC20Transfer",
+                                "default": "erc20-transfer"
+                            },
+                            "recipient": {
+                                "$ref": "#/definitions/Address",
+                                "title": "Recipient"
+                            },
+                            "reimbursement": {
+                                "minimum": 0,
+                                "title": "Reimbursement",
+                                "type": "number"
+                            },
+                            "token": {
+                                "$ref": "#/definitions/Address",
+                                "title": "Token"
+                            }
+                        },
+                        "required": [
+                            "amount",
+                            "kind",
+                            "recipient",
+                            "token"
+                        ],
+                        "type": "object"
                     }
-                ]
+                ],
+                "title": "ERC20 transfer"
             },
             "type": "array"
         },
@@ -92,27 +125,6 @@
             },
             "type": "array"
         },
-        "Array_3": {
-            "items": {
-                "$ref": "#/definitions/ERC20Transfer"
-            },
-            "type": "array"
-        },
-        "Array_4": {
-            "items": {
-                "anyOf": [
-                    {
-                        "$ref": "#/definitions/Vote",
-                        "description": "Snapshot Vote related to the proposal"
-                    },
-                    {
-                        "$ref": "#/definitions/SnapshotVote",
-                        "description": "Snapshot vote related to the proposal"
-                    }
-                ]
-            },
-            "type": "array"
-        },
         "ChainId": {
             "default": 1,
             "description": "Only supporting Ethereum for now",
@@ -123,7 +135,7 @@
             "type": "number"
         },
         "CustodialTreasuryManagementProposal": {
-            "$ref": "#/definitions/__type_5"
+            "$ref": "#/definitions/__type_7"
         },
         "DAOAgents": {
             "enum": [
@@ -133,183 +145,8 @@
             "title": "DAO Agent triggering the transaction",
             "type": "string"
         },
-        "ERC20Transfer": {
-            "allOf": [
-                {
-                    "properties": {
-                        "chainId": {
-                            "$ref": "#/definitions/ChainId"
-                        },
-                        "from": {
-                            "$ref": "#/definitions/DAOAgents"
-                        }
-                    },
-                    "required": [
-                        "chainId",
-                        "from"
-                    ],
-                    "type": "object"
-                },
-                {
-                    "properties": {
-                        "amount": {
-                            "minimum": 0,
-                            "title": "Amount",
-                            "type": "number"
-                        },
-                        "token": {
-                            "$ref": "#/definitions/Address",
-                            "title": "Token"
-                        }
-                    },
-                    "required": [
-                        "amount",
-                        "token"
-                    ],
-                    "type": "object"
-                },
-                {
-                    "properties": {
-                        "kind": {
-                            "$ref": "#/definitions/TransactionKind.ERC20Transfer",
-                            "default": "erc20-transfer"
-                        },
-                        "recipient": {
-                            "$ref": "#/definitions/Address",
-                            "title": "Recipient"
-                        }
-                    },
-                    "required": [
-                        "kind",
-                        "recipient"
-                    ],
-                    "type": "object"
-                }
-            ],
-            "title": "ERC20 transfer"
-        },
         "ExpenseProposal": {
-            "$ref": "#/definitions/__type_2"
-        },
-        "ExpenseWithApprovalAndCall": {
-            "items": [
-                {
-                    "allOf": [
-                        {
-                            "properties": {
-                                "chainId": {
-                                    "$ref": "#/definitions/ChainId"
-                                },
-                                "from": {
-                                    "$ref": "#/definitions/DAOAgents"
-                                }
-                            },
-                            "required": [
-                                "chainId",
-                                "from"
-                            ],
-                            "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "amount": {
-                                    "minimum": 0,
-                                    "title": "Amount",
-                                    "type": "number"
-                                },
-                                "token": {
-                                    "$ref": "#/definitions/Address",
-                                    "title": "Token"
-                                }
-                            },
-                            "required": [
-                                "amount",
-                                "token"
-                            ],
-                            "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "finalAmountUsed": {
-                                    "type": "number"
-                                },
-                                "kind": {
-                                    "$ref": "#/definitions/TransactionKind.ERC20Approval",
-                                    "default": "erc20-approval"
-                                },
-                                "spender": {
-                                    "$ref": "#/definitions/Address",
-                                    "title": "Spender"
-                                }
-                            },
-                            "required": [
-                                "kind",
-                                "spender"
-                            ],
-                            "type": "object"
-                        }
-                    ],
-                    "title": "ERC20 approval"
-                },
-                {
-                    "allOf": [
-                        {
-                            "properties": {
-                                "chainId": {
-                                    "$ref": "#/definitions/ChainId"
-                                },
-                                "from": {
-                                    "$ref": "#/definitions/DAOAgents"
-                                }
-                            },
-                            "required": [
-                                "chainId",
-                                "from"
-                            ],
-                            "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "kind": {
-                                    "$ref": "#/definitions/TransactionKind.ContractCall",
-                                    "default": "contract-call"
-                                },
-                                "method": {
-                                    "title": "Method",
-                                    "type": "string"
-                                },
-                                "parameters": {
-                                    "$ref": "#/definitions/Array",
-                                    "title": "Parameters"
-                                },
-                                "to": {
-                                    "$ref": "#/definitions/Address",
-                                    "title": "Address to send the transaction to"
-                                },
-                                "value": {
-                                    "default": 0,
-                                    "minimum": 0,
-                                    "title": "ETH value",
-                                    "type": "number"
-                                }
-                            },
-                            "required": [
-                                "kind",
-                                "method",
-                                "parameters",
-                                "to",
-                                "value"
-                            ],
-                            "type": "object"
-                        }
-                    ],
-                    "title": "Smart contract call"
-                }
-            ],
-            "maxItems": 2,
-            "minItems": 2,
-            "title": "Expense (with approval and call)",
-            "type": "array"
+            "$ref": "#/definitions/__type_4"
         },
         "Kind.CustodialTreasuryManagement": {
             "enum": [
@@ -351,51 +188,20 @@
             "$ref": "#/definitions/__type"
         },
         "ParameterChangeProposal": {
-            "$ref": "#/definitions/__type_3"
+            "$ref": "#/definitions/__type_5"
         },
         "ProclamationProposal": {
             "$ref": "#/definitions/__type_1"
         },
-        "SnapshotVote": {
-            "allOf": [
-                {
-                    "$ref": "#/definitions/__type_6",
-                    "description": "Snapshot Vote related to the proposal"
-                },
-                {
-                    "properties": {
-                        "outcome": {
-                            "anyOf": [
-                                {
-                                    "items": {
-                                        "type": "string"
-                                    },
-                                    "type": "array"
-                                },
-                                {
-                                    "type": "string"
-                                }
-                            ]
-                        }
-                    },
-                    "required": [
-                        "outcome"
-                    ],
-                    "type": "object"
-                }
-            ],
-            "description": "Snapshot vote related to the proposal",
-            "title": "Snapshot vote"
+        "SnapshotVotingParams.BinaryChoice": {
+            "$ref": "#/definitions/__type_2"
+        },
+        "SnapshotVotingParams.MultiChoice": {
+            "$ref": "#/definitions/__type_3"
         },
         "TransactionKind.ContractCall": {
             "enum": [
                 "contract-call"
-            ],
-            "type": "string"
-        },
-        "TransactionKind.ERC20Approval": {
-            "enum": [
-                "erc20-approval"
             ],
             "type": "string"
         },
@@ -406,10 +212,23 @@
             "type": "string"
         },
         "TreasuryManagementProposal": {
-            "$ref": "#/definitions/__type_4"
-        },
-        "Vote": {
             "$ref": "#/definitions/__type_6"
+        },
+        "VotingSystems": {
+            "enum": [
+                "ranked-choice",
+                "single-choice",
+                "weighted"
+            ],
+            "title": "Voting system",
+            "type": "string"
+        },
+        "VotingSystems.SingleChoice": {
+            "enum": [
+                "single-choice"
+            ],
+            "title": "Single choice",
+            "type": "string"
         },
         "__type": {
             "description": "Proposal that modifies the current governance process (`specs/N3GOV-v1.ts`\nand `GOVERNANCE.md`)",
@@ -443,24 +262,93 @@
                     "$ref": "#/definitions/Kind.Proclamation",
                     "default": "proclamation"
                 },
+                "parameters": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/SnapshotVotingParams.BinaryChoice",
+                            "description": "Only approve or reject"
+                        },
+                        {
+                            "$ref": "#/definitions/SnapshotVotingParams.MultiChoice",
+                            "description": "Multiple choices can pass"
+                        }
+                    ],
+                    "title": "Parameters of the vote"
+                },
                 "statement": {
                     "title": "Statement",
                     "type": "string"
-                },
-                "votingSystem": {
-                    "$ref": "#/definitions/AlternativeSnapshotVotingSystems"
                 }
             },
             "required": [
                 "choices",
                 "kind",
-                "statement",
-                "votingSystem"
+                "parameters",
+                "statement"
             ],
             "title": "Proclamation",
             "type": "object"
         },
         "__type_2": {
+            "description": "Only approve or reject",
+            "properties": {
+                "choices": {
+                    "default": [
+                        "approve",
+                        "reject"
+                    ],
+                    "items": [
+                        {
+                            "enum": [
+                                "approve"
+                            ],
+                            "type": "string"
+                        },
+                        {
+                            "enum": [
+                                "reject"
+                            ],
+                            "type": "string"
+                        }
+                    ],
+                    "maxItems": 2,
+                    "minItems": 2,
+                    "type": "array"
+                },
+                "votingSystem": {
+                    "$ref": "#/definitions/VotingSystems.SingleChoice",
+                    "default": "single-choice"
+                }
+            },
+            "required": [
+                "choices",
+                "votingSystem"
+            ],
+            "title": "Binary choice",
+            "type": "object"
+        },
+        "__type_3": {
+            "description": "Multiple choices can pass",
+            "properties": {
+                "choices": {
+                    "$ref": "#/definitions/Array"
+                },
+                "votingSystem": {
+                    "$ref": "#/definitions/VotingSystems"
+                },
+                "winningChoicesAmount": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "choices",
+                "votingSystem",
+                "winningChoicesAmount"
+            ],
+            "title": "Multiple choice",
+            "type": "object"
+        },
+        "__type_4": {
             "description": "Proposal to transfer, approve or interact with a contract moving an ERC20\ntoken outside of the Nation3 DAO's treasury, with the expectation that it\nflows outside of its control",
             "properties": {
                 "calls": {
@@ -478,7 +366,7 @@
             "title": "Expense",
             "type": "object"
         },
-        "__type_3": {
+        "__type_5": {
             "description": "Proposal to perform a parameter change in one of the contracts controlled by\nthe Nation3 DAO",
             "properties": {
                 "calls": {
@@ -496,8 +384,8 @@
             "title": "Parameter change",
             "type": "object"
         },
-        "__type_4": {
-            "description": "Proposal to perform an on-chain treasury management operation.\nExamples: Trading on DEXes, lending, borrowing or buying options on DeFi\nprotocols, adding or removing liquidity from pools",
+        "__type_6": {
+            "description": "Proposal to perform an on-chain treasury management operation.\nExamples: Trading on DEXes, lending, borrowing or buying options on DeFi\nprotocols, adding or removing liquidity from pools, registering an ENS name",
             "properties": {
                 "calls": {
                     "$ref": "#/definitions/Array_2"
@@ -514,11 +402,11 @@
             "title": "Treasury management",
             "type": "object"
         },
-        "__type_5": {
+        "__type_7": {
             "description": "Proposal to perform a treasury management operation, with the Nation3 DAO\nkeeping the legitimate ownership over the assets but holding them through a\nthird-party entity.\nExamples: Loans to legal entities, equity investments held via a legal\nproxy, liquidations via centralized exchange",
             "properties": {
                 "calls": {
-                    "$ref": "#/definitions/Array_3"
+                    "$ref": "#/definitions/Array_1"
                 },
                 "kind": {
                     "$ref": "#/definitions/Kind.CustodialTreasuryManagement",
@@ -530,28 +418,6 @@
                 "kind"
             ],
             "title": "Treasury management (custodial)",
-            "type": "object"
-        },
-        "__type_6": {
-            "description": "Snapshot Vote related to the proposal",
-            "properties": {
-                "passed": {
-                    "description": "Whether the proposal had a positive outcome or not",
-                    "title": "Passed",
-                    "type": "boolean"
-                },
-                "uri": {
-                    "description": "Full URI where the vote is accessible",
-                    "format": "uri",
-                    "title": "URI",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "passed",
-                "uri"
-            ],
-            "title": "Vote",
             "type": "object"
         }
     },
@@ -576,7 +442,7 @@
                 },
                 {
                     "$ref": "#/definitions/TreasuryManagementProposal",
-                    "description": "Proposal to perform an on-chain treasury management operation.\nExamples: Trading on DEXes, lending, borrowing or buying options on DeFi\nprotocols, adding or removing liquidity from pools"
+                    "description": "Proposal to perform an on-chain treasury management operation.\nExamples: Trading on DEXes, lending, borrowing or buying options on DeFi\nprotocols, adding or removing liquidity from pools, registering an ENS name"
                 },
                 {
                     "$ref": "#/definitions/CustodialTreasuryManagementProposal",
@@ -604,7 +470,80 @@
             "type": "number"
         },
         "votes": {
-            "$ref": "#/definitions/Array_4"
+            "additionalItems": {
+                "description": "Aragon vote related to the proposal",
+                "properties": {
+                    "passed": {
+                        "description": "Whether the proposal had a positive outcome or not",
+                        "title": "Passed",
+                        "type": "boolean"
+                    },
+                    "uri": {
+                        "description": "Full URI where the vote is accessible",
+                        "format": "uri",
+                        "title": "URI",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "passed",
+                    "uri"
+                ],
+                "title": "Aragon vote",
+                "type": "object"
+            },
+            "items": [
+                {
+                    "allOf": [
+                        {
+                            "description": "Aragon vote related to the proposal",
+                            "properties": {
+                                "passed": {
+                                    "description": "Whether the proposal had a positive outcome or not",
+                                    "title": "Passed",
+                                    "type": "boolean"
+                                },
+                                "uri": {
+                                    "description": "Full URI where the vote is accessible",
+                                    "format": "uri",
+                                    "title": "URI",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "passed",
+                                "uri"
+                            ],
+                            "title": "Aragon vote",
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "winningChoices": {
+                                    "additionalItems": {
+                                        "type": "string"
+                                    },
+                                    "items": [
+                                        {
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "minItems": 1,
+                                    "type": "array"
+                                }
+                            },
+                            "required": [
+                                "winningChoices"
+                            ],
+                            "type": "object"
+                        }
+                    ],
+                    "description": "Snapshot vote related to the proposal",
+                    "title": "Snapshot vote"
+                }
+            ],
+            "minItems": 1,
+            "type": "array"
         }
     },
     "required": [

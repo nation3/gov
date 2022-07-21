@@ -1,7 +1,103 @@
-// Data structures for governance proposals presented to the Nation3 DAO
-// Version 1.0-beta1
+/* Data structures for governance proposals presented to the Nation3 DAO
+ * Version 1.0-beta2
+ */
 
-// Shared types
+/* Common types */
+
+/* Off-chain proposal types */
+
+/**
+ * Proposal that modifies the current governance process (`specs/N3GOV-v1.ts`
+ * and `GOVERNANCE.md`)
+ * @title Meta
+ */
+type MetaProposal = {
+  /**
+   * @default meta
+   */
+  kind: Kind.Meta
+  /**
+   * Link to a pull request to this repo on GitHub
+   * @title PR link
+   *
+   * @TJS-format uri
+   */
+  prURI: string
+}
+
+namespace SnapshotVotingParams {
+  /* Defines Snapshot's voting systems, except for quadratic which currently
+   * doesn't work for Nation3 because of lack of Sybil resistance, and approval,  * which is redundant with weighted */
+  /**
+   * @title Voting system
+   */
+  enum VotingSystems {
+    /**
+     * @title Single choice
+     */
+    SingleChoice = 'single-choice',
+    RankedChoice = 'ranked-choice',
+    Weighted = 'weighted',
+  }
+
+  enum BinaryChoices {
+    Approve = 'approve',
+    Reject = 'reject',
+  }
+
+  /**
+   * Only approve or reject
+   * @title Binary choice
+   */
+  export type BinaryChoice = {
+    /**
+     * @default single-choice
+     */
+    votingSystem: VotingSystems.SingleChoice
+    /**
+     * @default ["approve", "reject"]
+     */
+    choices: [BinaryChoices.Approve, BinaryChoices.Reject]
+  }
+
+  /**
+   * Multiple choices can pass
+   * @title Multiple choice
+   */
+  export type MultiChoice = {
+    votingSystem: VotingSystems
+    choices: Array<string>
+    winningChoicesAmount: number
+  }
+}
+
+// Since multiple choices would be written in English and not encoded, this is
+// the only kind of proposal on Snapshot that can use other voting systems
+// other than Single Choice
+/**
+ * Proposal for the Nation3 DAO to adopt a statement
+ * @title Proclamation
+ */
+type ProclamationProposal = {
+  /**
+   * @default proclamation
+   */
+  kind: Kind.Proclamation
+  /**
+   * @title Statement
+   */
+  statement: string
+  /**
+   * @title Choices
+   */
+  choices: Array<string>
+  /**
+   * @title Parameters of the vote
+   */
+  parameters:
+    | SnapshotVotingParams.BinaryChoice
+    | SnapshotVotingParams.MultiChoice
+}
 
 /**
  * Ethereum address
@@ -30,7 +126,6 @@ type DAOAgents =
  */
 enum TransactionKind {
   ERC20Transfer = 'erc20-transfer',
-  ERC20Approval = 'erc20-approval',
   ContractCall = 'contract-call',
 }
 
@@ -40,9 +135,17 @@ type OnChainTransaction = {
 }
 
 /**
- * @title ERC20 transaction
+ * @title ERC20 transfer
  */
-type ERC20Transaction = OnChainTransaction & {
+type ERC20Transfer = OnChainTransaction & {
+  /**
+   * @default erc20-transfer
+   */
+  kind: TransactionKind.ERC20Transfer
+  /**
+   * @title Recipient
+   */
+  recipient: Address
   /**
    * @title Token
    */
@@ -52,35 +155,11 @@ type ERC20Transaction = OnChainTransaction & {
    * @minimum 0
    */
   amount: number
-}
-
-/**
- * @title ERC20 transfer
- */
-type ERC20Transfer = ERC20Transaction & {
   /**
-   * @default erc20-transfer
+   * @title Reimbursement
+   * @minimum 0
    */
-  kind: TransactionKind.ERC20Transfer
-  /**
-   * @title Recipient
-   */
-  recipient: Address
-}
-
-/**
- * @title ERC20 approval
- */
-type ERC20Approval = ERC20Transaction & {
-  /**
-   * @default erc20-approval
-   */
-  kind: TransactionKind.ERC20Approval
-  /**
-   * @title Spender
-   */
-  spender: Address
-  finalAmountUsed?: number
+  reimbursement?: number
 }
 
 /**
@@ -99,6 +178,7 @@ type ContractCall = OnChainTransaction & {
    * @title Method
    */
   method: string
+  /* react-jsonschema-form doesn't support an array with multiple types */
   /**
    * @title Parameters
    */
@@ -124,68 +204,7 @@ enum Kind {
   CustodialTreasuryManagement = 'custodial-treasury-management',
 }
 
-// Off-chain proposal types
-
-/**
- * Proposal that modifies the current governance process (`specs/N3GOV-v1.ts`
- * and `GOVERNANCE.md`)
- * @title Meta
- */
-type MetaProposal = {
-  /**
-   * @default meta
-   */
-  kind: Kind.Meta
-  /**
-   * Link to a pull request to this repo on GitHub
-   * @title PR link
-   *
-   * @TJS-format uri
-   */
-  prURI: string
-}
-
-// Defines Snapshot's voting systems, except for quadratic which currently
-// doesn't work for Nation3 because of lack of Sybil resistance
-/**
- * @title Voting system
- */
-type AlternativeSnapshotVotingSystems =
-  | 'single-choice'
-  | 'approval'
-  | 'ranked-choice'
-  | 'weighted'
-
-// Since multiple choices would be written in English and not encoded, this is
-// the only kind of proposal on Snapshot that can use other voting systems
-// other than Single Choice
-/**
- * Proposal for the Nation3 DAO to adopt a statement
- * @title Proclamation
- */
-type ProclamationProposal = {
-  /**
-   * @default proclamation
-   */
-  kind: Kind.Proclamation
-  /**
-   * @title Statement
-   */
-  statement: string
-  /**
-   * @title Choices
-   */
-  choices: Array<string>
-  votingSystem: AlternativeSnapshotVotingSystems
-}
-
-// On-chain proposal types
-
-/**
- * @title Expense (with approval and call)
- */
-type ExpenseWithApprovalAndCall = [ERC20Approval, ContractCall]
-
+/* On-chain proposal types */
 /**
  * Proposal to transfer, approve or interact with a contract moving an ERC20
  * token outside of the Nation3 DAO's treasury, with the expectation that it
@@ -197,8 +216,9 @@ type ExpenseProposal = {
    * @default expense
    */
   kind: Kind.Expense
-  calls: Array<ERC20Transfer | ExpenseWithApprovalAndCall>
+  calls: Array<ERC20Transfer>
 }
+
 /**
  * Proposal to perform a parameter change in one of the contracts controlled by
  * the Nation3 DAO
@@ -215,7 +235,7 @@ type ParameterChangeProposal = {
 /**
  * Proposal to perform an on-chain treasury management operation.
  * Examples: Trading on DEXes, lending, borrowing or buying options on DeFi
- * protocols, adding or removing liquidity from pools
+ * protocols, adding or removing liquidity from pools, registering an ENS name
  * @title Treasury management
  */
 type TreasuryManagementProposal = {
@@ -255,10 +275,10 @@ type Agreement = {
 }
 
 /**
- * Snapshot Vote related to the proposal
- * @title Vote
+ * Aragon vote related to the proposal
+ * @title Aragon vote
  */
-type Vote = {
+type AragonVote = {
   /**
    * Full URI where the vote is accessible
    * @title URI
@@ -277,12 +297,12 @@ type Vote = {
  * Snapshot vote related to the proposal
  * @title Snapshot vote
  */
-type SnapshotVote = Vote & {
+type SnapshotVote = AragonVote & {
   /*
-   * Winning choice in Snapshot
-   * @title Outcome
+   * Winning choice or choices in Snapshot
+   * @title Winning choice(s)
    */
-  outcome: string | Array<string>
+  winningChoices: [string, ...Array<string>]
 }
 
 // Proposal
@@ -322,5 +342,5 @@ export type Proposal = {
     | TreasuryManagementProposal
     | CustodialTreasuryManagementProposal
   // agreement?: Agreement
-  votes?: Array<SnapshotVote | Vote>
+  votes?: [SnapshotVote, ...Array<AragonVote>]
 }
