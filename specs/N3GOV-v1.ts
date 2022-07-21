@@ -59,6 +59,7 @@ namespace SnapshotVotingParams {
      */
     votingSystem: VotingSystems.SingleChoice
     /**
+     * @title Choices
      * @default ["Approve", "Reject"]
      */
     choices: ['Approve', 'Reject']
@@ -70,6 +71,9 @@ namespace SnapshotVotingParams {
    */
   export type MultiChoice = {
     votingSystem: VotingSystems
+    /**
+     * @title Choices
+     */
     choices: Array<string>
     /**
      * @title Amount of winning choices
