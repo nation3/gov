@@ -57,7 +57,7 @@ namespace SnapshotVotingParams {
      * @title Voting system
      * @default single-choice
      */
-    votingSystem: VotingSystems
+    votingSystem: VotingSystems.SingleChoice
     /**
      * @default ["Approve", "Reject"]
      */
