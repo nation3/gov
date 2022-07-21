@@ -37,10 +37,6 @@
                                 "title": "Amount",
                                 "type": "number"
                             },
-                            "kind": {
-                                "$ref": "#/definitions/TransactionKind.ERC20Transfer",
-                                "default": "erc20-transfer"
-                            },
                             "recipient": {
                                 "$ref": "#/definitions/Address",
                                 "title": "Recipient"
@@ -57,7 +53,6 @@
                         },
                         "required": [
                             "amount",
-                            "kind",
                             "recipient",
                             "token"
                         ],
@@ -66,6 +61,7 @@
                 ],
                 "title": "ERC20 transfer"
             },
+            "title": "ERC20 transfers",
             "type": "array"
         },
         "Array_2": {
@@ -88,16 +84,12 @@
                     },
                     {
                         "properties": {
-                            "kind": {
-                                "$ref": "#/definitions/TransactionKind.ContractCall",
-                                "default": "contract-call"
-                            },
                             "method": {
                                 "title": "Method",
                                 "type": "string"
                             },
                             "parameters": {
-                                "$ref": "#/definitions/Array",
+                                "$ref": "#/definitions/Array_3",
                                 "title": "Parameters"
                             },
                             "to": {
@@ -112,16 +104,20 @@
                             }
                         },
                         "required": [
-                            "kind",
                             "method",
-                            "parameters",
-                            "to",
-                            "value"
+                            "to"
                         ],
                         "type": "object"
                     }
                 ],
                 "title": "Smart contract call"
+            },
+            "title": "Contract calls",
+            "type": "array"
+        },
+        "Array_3": {
+            "items": {
+                "type": "string"
             },
             "type": "array"
         },
@@ -134,6 +130,9 @@
             "title": "Chain ID",
             "type": "number"
         },
+        "ContractCalls": {
+            "$ref": "#/definitions/Array_2"
+        },
         "CustodialTreasuryManagementProposal": {
             "$ref": "#/definitions/__type_7"
         },
@@ -144,6 +143,9 @@
             ],
             "title": "DAO Agent triggering the transaction",
             "type": "string"
+        },
+        "ERC20Transfers": {
+            "$ref": "#/definitions/Array_1"
         },
         "ExpenseProposal": {
             "$ref": "#/definitions/__type_4"
@@ -199,35 +201,17 @@
         "SnapshotVotingParams.MultiChoice": {
             "$ref": "#/definitions/__type_3"
         },
-        "TransactionKind.ContractCall": {
-            "enum": [
-                "contract-call"
-            ],
-            "type": "string"
-        },
-        "TransactionKind.ERC20Transfer": {
-            "enum": [
-                "erc20-transfer"
-            ],
-            "type": "string"
-        },
         "TreasuryManagementProposal": {
             "$ref": "#/definitions/__type_6"
         },
         "VotingSystems": {
+            "default": "single-choice",
             "enum": [
                 "ranked-choice",
                 "single-choice",
                 "weighted"
             ],
             "title": "Voting system",
-            "type": "string"
-        },
-        "VotingSystems.SingleChoice": {
-            "enum": [
-                "single-choice"
-            ],
-            "title": "Single choice",
             "type": "string"
         },
         "__type": {
@@ -238,7 +222,7 @@
                     "default": "meta"
                 },
                 "prURI": {
-                    "description": "Link to a pull request to this repo on GitHub",
+                    "description": "Link to a pull request to the nation3/governance repo on GitHub",
                     "format": "uri",
                     "title": "PR link",
                     "type": "string"
@@ -294,19 +278,19 @@
             "properties": {
                 "choices": {
                     "default": [
-                        "approve",
-                        "reject"
+                        "Approve",
+                        "Reject"
                     ],
                     "items": [
                         {
                             "enum": [
-                                "approve"
+                                "Approve"
                             ],
                             "type": "string"
                         },
                         {
                             "enum": [
-                                "reject"
+                                "Reject"
                             ],
                             "type": "string"
                         }
@@ -316,7 +300,7 @@
                     "type": "array"
                 },
                 "votingSystem": {
-                    "$ref": "#/definitions/VotingSystems.SingleChoice",
+                    "$ref": "#/definitions/VotingSystems",
                     "default": "single-choice"
                 }
             },
@@ -337,6 +321,7 @@
                     "$ref": "#/definitions/VotingSystems"
                 },
                 "winningChoicesAmount": {
+                    "title": "Amount of winning choices",
                     "type": "number"
                 }
             },
@@ -351,17 +336,17 @@
         "__type_4": {
             "description": "Proposal to transfer, approve or interact with a contract moving an ERC20\ntoken outside of the Nation3 DAO's treasury, with the expectation that it\nflows outside of its control",
             "properties": {
-                "calls": {
-                    "$ref": "#/definitions/Array_1"
-                },
                 "kind": {
                     "$ref": "#/definitions/Kind.Expense",
                     "default": "expense"
+                },
+                "transfers": {
+                    "$ref": "#/definitions/ERC20Transfers"
                 }
             },
             "required": [
-                "calls",
-                "kind"
+                "kind",
+                "transfers"
             ],
             "title": "Expense",
             "type": "object"
@@ -370,7 +355,7 @@
             "description": "Proposal to perform a parameter change in one of the contracts controlled by\nthe Nation3 DAO",
             "properties": {
                 "calls": {
-                    "$ref": "#/definitions/Array_2"
+                    "$ref": "#/definitions/ContractCalls"
                 },
                 "kind": {
                     "$ref": "#/definitions/Kind.ParameterChange",
@@ -388,7 +373,7 @@
             "description": "Proposal to perform an on-chain treasury management operation.\nExamples: Trading on DEXes, lending, borrowing or buying options on DeFi\nprotocols, adding or removing liquidity from pools, registering an ENS name",
             "properties": {
                 "calls": {
-                    "$ref": "#/definitions/Array_2"
+                    "$ref": "#/definitions/ContractCalls"
                 },
                 "kind": {
                     "$ref": "#/definitions/Kind.TreasuryManagement",
@@ -405,17 +390,17 @@
         "__type_7": {
             "description": "Proposal to perform a treasury management operation, with the Nation3 DAO\nkeeping the legitimate ownership over the assets but holding them through a\nthird-party entity.\nExamples: Loans to legal entities, equity investments held via a legal\nproxy, liquidations via centralized exchange",
             "properties": {
-                "calls": {
-                    "$ref": "#/definitions/Array_1"
-                },
                 "kind": {
                     "$ref": "#/definitions/Kind.CustodialTreasuryManagement",
                     "default": "custodial-treasury-management"
+                },
+                "transfers": {
+                    "$ref": "#/definitions/ERC20Transfers"
                 }
             },
             "required": [
-                "calls",
-                "kind"
+                "kind",
+                "transfers"
             ],
             "title": "Treasury management (custodial)",
             "type": "object"
@@ -523,12 +508,14 @@
                                     "additionalItems": {
                                         "type": "string"
                                     },
+                                    "description": "Winning choice or choices in Snapshot",
                                     "items": [
                                         {
                                             "type": "string"
                                         }
                                     ],
                                     "minItems": 1,
+                                    "title": "Winning choice(s)",
                                     "type": "array"
                                 }
                             },
