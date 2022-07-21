@@ -3,10 +3,7 @@
  * Version 1.0-beta2
  */
 
-/**
- * Proposal type
- */
-enum Kind {
+enum ProposalKinds {
   Meta = 'meta',
   Proclamation = 'proclamation',
   Expense = 'expense',
@@ -26,7 +23,7 @@ type MetaProposal = {
   /**
    * @default meta
    */
-  kind: Kind.Meta
+  kind: ProposalKinds.Meta
   /**
    * Link to a pull request to the nation3/governance repo on GitHub
    * @title PR link
@@ -93,7 +90,7 @@ type ProclamationProposal = {
   /**
    * @default proclamation
    */
-  kind: Kind.Proclamation
+  kind: ProposalKinds.Proclamation
   /**
    * @title Statement
    */
@@ -203,7 +200,7 @@ type ExpenseProposal = {
   /**
    * @default expense
    */
-  kind: Kind.Expense
+  kind: ProposalKinds.Expense
   transfers: ERC20Transfers
 }
 
@@ -221,7 +218,7 @@ type ParameterChangeProposal = {
   /**
    * @default parameter-change
    */
-  kind: Kind.ParameterChange
+  kind: ProposalKinds.ParameterChange
   calls: ContractCalls
 }
 
@@ -235,7 +232,7 @@ type TreasuryManagementProposal = {
   /**
    * @default treasury-management
    */
-  kind: Kind.TreasuryManagement
+  kind: ProposalKinds.TreasuryManagement
   calls: ContractCalls
 }
 
@@ -251,7 +248,7 @@ type CustodialTreasuryManagementProposal = {
   /**
    * @default custodial-treasury-management
    */
-  kind: Kind.CustodialTreasuryManagement
+  kind: ProposalKinds.CustodialTreasuryManagement
   transfers: ERC20Transfers
 }
 
@@ -268,26 +265,21 @@ type Agreement = {
 }
 
 /**
- * Aragon vote related to the proposal
  * @title Aragon vote
  */
 type AragonVote = {
   /**
-   * Full URI where the vote is accessible
    * @title URI
-   *
    * @TJS-format uri
    */
   uri: string
   /**
-   * Whether the proposal had a positive outcome or not
    * @title Passed
    */
   passed: boolean
 }
 
 /**
- * Snapshot vote related to the proposal
  * @title Snapshot vote
  */
 type SnapshotVote = AragonVote & {
@@ -298,17 +290,10 @@ type SnapshotVote = AragonVote & {
   winningChoices: [string, ...Array<string>]
 }
 
-// Proposal
-// agreement: Optional since the court isn't live yet
-// votes: Contains the required votes to execute on the proposal. This will be
-// the Snapshot vote and the Aragon vote (if there's one) or votes if the
-// proposal requires prior approval to send tokens. They will be added as they
-// go live
 export type Proposal = {
   /**
    * Version of this spec that the proposal adheres to
    * @title Specification
-   *
    * @minimum 0
    * @default 1
    */
@@ -316,14 +301,12 @@ export type Proposal = {
   /**
    * Numeric identifier for the proposal, assigned at the time of PR creation
    * @title ID of the proposal
-   *
    * @minimum 0
    */
   id: number
   /**
    * URI where the discussion leading to this proposal can be found
-   * @title Discussion
-   *
+   * @title Discussion URI
    * @TJS-format uri
    */
   discussion: string
@@ -336,7 +319,7 @@ export type Proposal = {
     | CustodialTreasuryManagementProposal
   // agreement?: Agreement
   /**
-   *
+   * @title Votes
    */
   votes?: [SnapshotVote, ...Array<AragonVote>]
 }
