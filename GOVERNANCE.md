@@ -65,7 +65,6 @@ On-chain enactment: 3, after 2, 2d
 5. A bot will automatically merge it after checking:
    - All data types match the spec.
    - The forum post is at least 48h old and contains the encoded proposal.
-   - The proposer signature is correct and the proposer is a citizen.
 6. The Meta Guild multisig creates the vote on Snapshot.
 7. The Meta Guild multisig creates the vote on Aragon.
 

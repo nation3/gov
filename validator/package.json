@@ -6,12 +6,13 @@
   "author": "Nation3 DAO",
   "license": "AGPL-3.0-or-later",
   "scripts": {
-    "validate": "ts-node index.ts",
-    "generate-json-schema": "typescript-json-schema ../specs/N3GOV-v1.ts Proposal --required > N3GOV-v1.json"
+    "validate": "ts-node index.ts"
   },
   "dependencies": {
+    "@nation3/gov-specs": "^1.0.0-beta6",
     "ajv": "^8.11.0",
-    "runtypes": "^6.5.1",
+    "ajv-formats": "^2.1.1",
     "typescript-json-schema": "^0.54.0"
-  }
+  },
+  "type": "module"
 }
