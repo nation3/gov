@@ -14,6 +14,133 @@
         },
         "Array_1": {
             "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "ChainId": {
+            "default": 1,
+            "description": "Only supporting Ethereum for now",
+            "enum": [
+                1
+            ],
+            "title": "Chain ID",
+            "type": "number"
+        },
+        "ContractCalls": {
+            "additionalItems": {
+                "allOf": [
+                    {
+                        "properties": {
+                            "chainId": {
+                                "$ref": "#/definitions/ChainId"
+                            },
+                            "from": {
+                                "$ref": "#/definitions/DAOAgents"
+                            }
+                        },
+                        "required": [
+                            "chainId",
+                            "from"
+                        ],
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "method": {
+                                "title": "Method",
+                                "type": "string"
+                            },
+                            "parameters": {
+                                "$ref": "#/definitions/Array_1",
+                                "title": "Parameters"
+                            },
+                            "to": {
+                                "$ref": "#/definitions/Address",
+                                "title": "Address to send the transaction to"
+                            },
+                            "value": {
+                                "default": 0,
+                                "minimum": 0,
+                                "title": "ETH value",
+                                "type": "number"
+                            }
+                        },
+                        "required": [
+                            "method",
+                            "to"
+                        ],
+                        "type": "object"
+                    }
+                ],
+                "title": "Smart contract call"
+            },
+            "items": [
+                {
+                    "allOf": [
+                        {
+                            "properties": {
+                                "chainId": {
+                                    "$ref": "#/definitions/ChainId"
+                                },
+                                "from": {
+                                    "$ref": "#/definitions/DAOAgents"
+                                }
+                            },
+                            "required": [
+                                "chainId",
+                                "from"
+                            ],
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "method": {
+                                    "title": "Method",
+                                    "type": "string"
+                                },
+                                "parameters": {
+                                    "$ref": "#/definitions/Array_1",
+                                    "title": "Parameters"
+                                },
+                                "to": {
+                                    "$ref": "#/definitions/Address",
+                                    "title": "Address to send the transaction to"
+                                },
+                                "value": {
+                                    "default": 0,
+                                    "minimum": 0,
+                                    "title": "ETH value",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "method",
+                                "to"
+                            ],
+                            "type": "object"
+                        }
+                    ],
+                    "title": "Smart contract call"
+                }
+            ],
+            "minItems": 1,
+            "title": "Contract calls",
+            "type": "array"
+        },
+        "CustodialTreasuryManagementProposal": {
+            "$ref": "#/definitions/__type_7"
+        },
+        "DAOAgents": {
+            "enum": [
+                "0x336252602b3a8a0be336ed942228305173e8082b",
+                "0x7b81e8d4e82796c9b76284fa4d21e57b8b86a06c"
+            ],
+            "title": "DAO Agent triggering the transaction",
+            "type": "string"
+        },
+        "ERC20Transfers": {
+            "additionalItems": {
                 "allOf": [
                     {
                         "properties": {
@@ -61,130 +188,62 @@
                 ],
                 "title": "ERC20 transfer"
             },
+            "items": [
+                {
+                    "allOf": [
+                        {
+                            "properties": {
+                                "chainId": {
+                                    "$ref": "#/definitions/ChainId"
+                                },
+                                "from": {
+                                    "$ref": "#/definitions/DAOAgents"
+                                }
+                            },
+                            "required": [
+                                "chainId",
+                                "from"
+                            ],
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "amount": {
+                                    "minimum": 0,
+                                    "title": "Amount",
+                                    "type": "number"
+                                },
+                                "recipient": {
+                                    "$ref": "#/definitions/Address",
+                                    "title": "Recipient"
+                                },
+                                "reimbursement": {
+                                    "minimum": 0,
+                                    "title": "Reimbursement",
+                                    "type": "number"
+                                },
+                                "token": {
+                                    "$ref": "#/definitions/Address",
+                                    "title": "Token"
+                                }
+                            },
+                            "required": [
+                                "amount",
+                                "recipient",
+                                "token"
+                            ],
+                            "type": "object"
+                        }
+                    ],
+                    "title": "ERC20 transfer"
+                }
+            ],
+            "minItems": 1,
             "title": "ERC20 transfers",
             "type": "array"
         },
-        "Array_2": {
-            "items": {
-                "allOf": [
-                    {
-                        "properties": {
-                            "chainId": {
-                                "$ref": "#/definitions/ChainId"
-                            },
-                            "from": {
-                                "$ref": "#/definitions/DAOAgents"
-                            }
-                        },
-                        "required": [
-                            "chainId",
-                            "from"
-                        ],
-                        "type": "object"
-                    },
-                    {
-                        "properties": {
-                            "method": {
-                                "title": "Method",
-                                "type": "string"
-                            },
-                            "parameters": {
-                                "$ref": "#/definitions/Array_3",
-                                "title": "Parameters"
-                            },
-                            "to": {
-                                "$ref": "#/definitions/Address",
-                                "title": "Address to send the transaction to"
-                            },
-                            "value": {
-                                "default": 0,
-                                "minimum": 0,
-                                "title": "ETH value",
-                                "type": "number"
-                            }
-                        },
-                        "required": [
-                            "method",
-                            "to"
-                        ],
-                        "type": "object"
-                    }
-                ],
-                "title": "Smart contract call"
-            },
-            "title": "Contract calls",
-            "type": "array"
-        },
-        "Array_3": {
-            "items": {
-                "type": "string"
-            },
-            "type": "array"
-        },
-        "ChainId": {
-            "default": 1,
-            "description": "Only supporting Ethereum for now",
-            "enum": [
-                1
-            ],
-            "title": "Chain ID",
-            "type": "number"
-        },
-        "ContractCalls": {
-            "$ref": "#/definitions/Array_2"
-        },
-        "CustodialTreasuryManagementProposal": {
-            "$ref": "#/definitions/__type_7"
-        },
-        "DAOAgents": {
-            "enum": [
-                "0x336252602b3a8a0be336ed942228305173e8082b",
-                "0x7b81e8d4e82796c9b76284fa4d21e57b8b86a06c"
-            ],
-            "title": "DAO Agent triggering the transaction",
-            "type": "string"
-        },
-        "ERC20Transfers": {
-            "$ref": "#/definitions/Array_1"
-        },
         "ExpenseProposal": {
             "$ref": "#/definitions/__type_4"
-        },
-        "Kind.CustodialTreasuryManagement": {
-            "enum": [
-                "custodial-treasury-management"
-            ],
-            "type": "string"
-        },
-        "Kind.Expense": {
-            "enum": [
-                "expense"
-            ],
-            "type": "string"
-        },
-        "Kind.Meta": {
-            "enum": [
-                "meta"
-            ],
-            "type": "string"
-        },
-        "Kind.ParameterChange": {
-            "enum": [
-                "parameter-change"
-            ],
-            "type": "string"
-        },
-        "Kind.Proclamation": {
-            "enum": [
-                "proclamation"
-            ],
-            "type": "string"
-        },
-        "Kind.TreasuryManagement": {
-            "enum": [
-                "treasury-management"
-            ],
-            "type": "string"
         },
         "MetaProposal": {
             "$ref": "#/definitions/__type"
@@ -195,16 +254,49 @@
         "ProclamationProposal": {
             "$ref": "#/definitions/__type_1"
         },
+        "ProposalKinds.CustodialTreasuryManagement": {
+            "enum": [
+                "custodial-treasury-management"
+            ],
+            "type": "string"
+        },
+        "ProposalKinds.Expense": {
+            "enum": [
+                "expense"
+            ],
+            "type": "string"
+        },
+        "ProposalKinds.Meta": {
+            "enum": [
+                "meta"
+            ],
+            "type": "string"
+        },
+        "ProposalKinds.ParameterChange": {
+            "enum": [
+                "parameter-change"
+            ],
+            "type": "string"
+        },
+        "ProposalKinds.Proclamation": {
+            "enum": [
+                "proclamation"
+            ],
+            "type": "string"
+        },
+        "ProposalKinds.TreasuryManagement": {
+            "enum": [
+                "treasury-management"
+            ],
+            "type": "string"
+        },
         "SnapshotVotingParams.BinaryChoice": {
             "$ref": "#/definitions/__type_2"
         },
         "SnapshotVotingParams.MultiChoice": {
             "$ref": "#/definitions/__type_3"
         },
-        "TreasuryManagementProposal": {
-            "$ref": "#/definitions/__type_6"
-        },
-        "VotingSystems": {
+        "SnapshotVotingParams.VotingSystems": {
             "default": "single-choice",
             "enum": [
                 "ranked-choice",
@@ -214,11 +306,20 @@
             "title": "Voting system",
             "type": "string"
         },
+        "SnapshotVotingParams.VotingSystems.SingleChoice": {
+            "enum": [
+                "single-choice"
+            ],
+            "type": "string"
+        },
+        "TreasuryManagementProposal": {
+            "$ref": "#/definitions/__type_6"
+        },
         "__type": {
             "description": "Proposal that modifies the current governance process (`specs/N3GOV-v1.ts`\nand `GOVERNANCE.md`)",
             "properties": {
                 "kind": {
-                    "$ref": "#/definitions/Kind.Meta",
+                    "$ref": "#/definitions/ProposalKinds.Meta",
                     "default": "meta"
                 },
                 "prURI": {
@@ -238,12 +339,8 @@
         "__type_1": {
             "description": "Proposal for the Nation3 DAO to adopt a statement",
             "properties": {
-                "choices": {
-                    "$ref": "#/definitions/Array",
-                    "title": "Choices"
-                },
                 "kind": {
-                    "$ref": "#/definitions/Kind.Proclamation",
+                    "$ref": "#/definitions/ProposalKinds.Proclamation",
                     "default": "proclamation"
                 },
                 "parameters": {
@@ -265,7 +362,6 @@
                 }
             },
             "required": [
-                "choices",
                 "kind",
                 "parameters",
                 "statement"
@@ -297,11 +393,13 @@
                     ],
                     "maxItems": 2,
                     "minItems": 2,
+                    "title": "Choices",
                     "type": "array"
                 },
                 "votingSystem": {
-                    "$ref": "#/definitions/VotingSystems",
-                    "default": "single-choice"
+                    "$ref": "#/definitions/SnapshotVotingParams.VotingSystems.SingleChoice",
+                    "default": "single-choice",
+                    "title": "Voting system"
                 }
             },
             "required": [
@@ -315,10 +413,11 @@
             "description": "Multiple choices can pass",
             "properties": {
                 "choices": {
-                    "$ref": "#/definitions/Array"
+                    "$ref": "#/definitions/Array",
+                    "title": "Choices"
                 },
                 "votingSystem": {
-                    "$ref": "#/definitions/VotingSystems"
+                    "$ref": "#/definitions/SnapshotVotingParams.VotingSystems"
                 },
                 "winningChoicesAmount": {
                     "title": "Amount of winning choices",
@@ -337,7 +436,7 @@
             "description": "Proposal to transfer, approve or interact with a contract moving an ERC20\ntoken outside of the Nation3 DAO's treasury, with the expectation that it\nflows outside of its control",
             "properties": {
                 "kind": {
-                    "$ref": "#/definitions/Kind.Expense",
+                    "$ref": "#/definitions/ProposalKinds.Expense",
                     "default": "expense"
                 },
                 "transfers": {
@@ -358,7 +457,7 @@
                     "$ref": "#/definitions/ContractCalls"
                 },
                 "kind": {
-                    "$ref": "#/definitions/Kind.ParameterChange",
+                    "$ref": "#/definitions/ProposalKinds.ParameterChange",
                     "default": "parameter-change"
                 }
             },
@@ -376,7 +475,7 @@
                     "$ref": "#/definitions/ContractCalls"
                 },
                 "kind": {
-                    "$ref": "#/definitions/Kind.TreasuryManagement",
+                    "$ref": "#/definitions/ProposalKinds.TreasuryManagement",
                     "default": "treasury-management"
                 }
             },
@@ -391,7 +490,7 @@
             "description": "Proposal to perform a treasury management operation, with the Nation3 DAO\nkeeping the legitimate ownership over the assets but holding them through a\nthird-party entity.\nExamples: Loans to legal entities, equity investments held via a legal\nproxy, liquidations via centralized exchange",
             "properties": {
                 "kind": {
-                    "$ref": "#/definitions/Kind.CustodialTreasuryManagement",
+                    "$ref": "#/definitions/ProposalKinds.CustodialTreasuryManagement",
                     "default": "custodial-treasury-management"
                 },
                 "transfers": {
@@ -433,12 +532,14 @@
                     "$ref": "#/definitions/CustodialTreasuryManagementProposal",
                     "description": "Proposal to perform a treasury management operation, with the Nation3 DAO\nkeeping the legitimate ownership over the assets but holding them through a\nthird-party entity.\nExamples: Loans to legal entities, equity investments held via a legal\nproxy, liquidations via centralized exchange"
                 }
-            ]
+            ],
+            "description": "Different data is required depending on the proposal kind",
+            "title": "Proposal content"
         },
         "discussion": {
             "description": "URI where the discussion leading to this proposal can be found",
             "format": "uri",
-            "title": "Discussion",
+            "title": "Discussion URI",
             "type": "string"
         },
         "id": {
@@ -456,15 +557,12 @@
         },
         "votes": {
             "additionalItems": {
-                "description": "Aragon vote related to the proposal",
                 "properties": {
                     "passed": {
-                        "description": "Whether the proposal had a positive outcome or not",
                         "title": "Passed",
                         "type": "boolean"
                     },
                     "uri": {
-                        "description": "Full URI where the vote is accessible",
                         "format": "uri",
                         "title": "URI",
                         "type": "string"
@@ -481,15 +579,12 @@
                 {
                     "allOf": [
                         {
-                            "description": "Aragon vote related to the proposal",
                             "properties": {
                                 "passed": {
-                                    "description": "Whether the proposal had a positive outcome or not",
                                     "title": "Passed",
                                     "type": "boolean"
                                 },
                                 "uri": {
-                                    "description": "Full URI where the vote is accessible",
                                     "format": "uri",
                                     "title": "URI",
                                     "type": "string"
@@ -525,11 +620,11 @@
                             "type": "object"
                         }
                     ],
-                    "description": "Snapshot vote related to the proposal",
                     "title": "Snapshot vote"
                 }
             ],
             "minItems": 1,
+            "title": "Votes",
             "type": "array"
         }
     },

@@ -3,7 +3,7 @@
  * Version 1.0-beta2
  */
 
-enum ProposalKinds {
+declare enum ProposalKinds {
   Meta = 'meta',
   Proclamation = 'proclamation',
   Expense = 'expense',
@@ -32,7 +32,7 @@ type MetaProposal = {
   prURI: string
 }
 
-namespace SnapshotVotingParams {
+declare namespace SnapshotVotingParams {
   /* Defines Snapshot's voting systems, except for quadratic which currently
    * doesn't work for Nation3 because of lack of Sybil resistance, and approval,  * which is redundant with weighted */
   /**
@@ -96,10 +96,6 @@ type ProclamationProposal = {
    */
   statement: string
   /**
-   * @title Choices
-   */
-  choices: Array<string>
-  /**
    * @title Parameters of the vote
    */
   parameters:
@@ -161,7 +157,7 @@ type ERC20Transfer = OnChainTransaction & {
 /**
  * @title ERC20 transfers
  */
-type ERC20Transfers = Array<ERC20Transfer>
+type ERC20Transfers = [ERC20Transfer, ...Array<ERC20Transfer>]
 
 /**
  * @title Smart contract call
@@ -207,7 +203,7 @@ type ExpenseProposal = {
 /**
  * @title Contract calls
  */
-type ContractCalls = Array<ContractCall>
+type ContractCalls = [ContractCall, ...Array<ContractCall>]
 
 /**
  * Proposal to perform a parameter change in one of the contracts controlled by
@@ -310,6 +306,10 @@ export type Proposal = {
    * @TJS-format uri
    */
   discussion: string
+  /**
+   * Different data is required depending on the proposal kind
+   * @title Proposal content
+   */
   content:
     | MetaProposal
     | ProclamationProposal
