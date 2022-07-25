@@ -16,7 +16,8 @@ This document outlines the governance process that the Nation3 citizens, the Met
 
 ```mermaid
 flowchart LR
-  REVIEW[Community review] --> FINAL[Final proposal]
+  REVIEW[Community review] --> DISPUTE[Dispute period]
+  DISPUTE --> OFFVOTE[Off-chain vote]
   FINAL --> OFFVOTE[Off-chain vote]
   OFFVOTE --> ONVOTE[On-chain enactment]
 ```
@@ -53,7 +54,8 @@ title Lifecycle of a proposal
 
 Community review: 1, 0000-01-01, 2d
 Off-chain vote: 2, after 1, 2d
-On-chain enactment: 3, after 2, 2d
+Dispute period: 3, after 2, 2d
+On-chain enactment: 4, after 3, 2d
 ```
 
 ## Submitting a proposal
