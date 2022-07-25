@@ -59,7 +59,7 @@ On-chain enactment: 3, after 2, 2d
 ## Submitting a proposal
 
 1. Once you are ready to submit a formal proposal, go to the [Proposal Generator](https://gov.nation3.org/proposals/create) to generate an encoded version. Proposals need to adhere to the [governance spec](../specs/N3GOV-v1.d.ts).
-2. [Open a pull request](https://github.com/nation3/governance/pull/new) adding the proposal to this repo. Link the pull request at the end of your forum post.
+2. [Open a pull request](https://github.com/nation3/gov-proposals/pull/new) in the `gov-proposals` repo adding the proposal as `N3GOV-X.json`. Link the pull request at the end of your forum post.
 3. Modify the proposal based on feedback, both in the forum and in the pull request.
 4. Once the feedback period ends, you can tag it as `frozen` on GitHub.
 5. A bot will automatically merge it after checking:
