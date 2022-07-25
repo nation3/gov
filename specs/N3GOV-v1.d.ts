@@ -248,18 +248,6 @@ type CustodialTreasuryManagementProposal = {
 }
 
 /**
- * Agreement in the Nation3 jurisdiction entered by the proposer in order to
- * send a governance proposal. They can be slashed in case of breach of duties
- * Having this agreement in place also lets us extract the proposer's account
- * @title Agreement
- */
-type Agreement = {
-  chainId: ChainId
-  agreementsFramework: Address
-  agreementId: number
-}
-
-/**
  * @title Aragon vote
  */
 type AragonVote = {
