@@ -1,1 +1,1 @@
-../GOVERNANCE.md
+GOVERNANCE.md
