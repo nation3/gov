@@ -222,7 +222,8 @@
             "description": "Proposal that modifies the current governance process (`specs/N3GOV-v1.ts`\nand `GOVERNANCE.md`)",
             "properties": {
                 "kind": {
-                    "$ref": "#/definitions/ProposalKinds.Meta"
+                    "$ref": "#/definitions/ProposalKinds.Meta",
+                    "default": "meta"
                 },
                 "prURI": {
                     "description": "Link to a pull request to the nation3/gov repo on GitHub",
