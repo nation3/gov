@@ -1,6 +1,6 @@
 /**
  * Data structures for governance proposals presented to the Nation3 DAO
- * Version 1.0-beta3
+ * Version 1.0-beta4
  */
 
 declare enum ProposalKinds {
