@@ -4,7 +4,7 @@ This document outlines the governance process that the Nation3 citizens, the Met
 
 ## Kinds of proposals
 
-- **Meta**: Proposal that modifies the current governance process (`specs/N3GOV-v1.ts` and `GOVERNANCE.md`).
+- **Meta**: Proposal that modifies the current governance process (`specs/N3GOV-v1.d.ts` and `GOVERNANCE.md`).
 - **Proclamation**: Proposal for the Nation3 DAO to adopt a statement.
   - Since multiple choices would be written in English and not encoded, this is the only kind of proposal on Snapshot that can use other voting systems other than _Single Choice_.
 - **Expense**: Proposal to transfer an ERC20 token outside of the Nation3 DAO's treasury, with the expectation that it flows outside of its control.
@@ -31,7 +31,7 @@ flowchart LR
    - **Census**: All Nation3 citizens.
    - **Voting weight**: Token-weighted by $veNATION balance.
    - **Voting system**:
-     - **Proclamation proposals**: _Single Choice_, _Approval_, _Ranked Choice_ or _Weighted_ as chosen by the proposer.
+     - **Proclamation proposals**: _Single Choice_, _Ranked Choice_ or _Weighted_ as chosen by the proposer.
      - **All other kinds of proposals**: _Single Choice_.
    - **Voting threshold**: Simple majority.
 
@@ -40,7 +40,7 @@ flowchart LR
    - **Platform**: [Aragon](https://client.aragon.org/#/nation3/0x92462953792d3e84af56edfc74d93e5885d38cc0/).
    - **Census**: All $veNATION holders.
    - **Voting weight**: Token-weighted by $veNATION balance.
-   - **Voting system**: Binary (yes/no).
+   - **Voting system**: Binary (approve/reject).
    - **Voting threshold**: Simple majority.
 
 Census and voting weights are determined at the time of vote creation, both for the Nation3 space on Snapshot and the Nation3 DAO on Aragon. The Nation3 DAO, Nation3 passports and $veNATION are currently only on Ethereum.
@@ -58,7 +58,7 @@ On-chain enactment: 3, after 2, 2d
 
 ## Submitting a proposal
 
-1. Once you are ready to submit a formal proposal, go to the Proposal Generator (soon) to generate an encoded version.
+1. Once you are ready to submit a formal proposal, go to the [Proposal Generator](https://gov.nation3.org/proposals/create) to generate an encoded version.
 2. [Open a pull request](https://github.com/nation3/governance/pull/new) adding the proposal to this repo. Link the pull request at the end of your forum post.
 3. Modify the proposal based on feedback, both in the forum and in the pull request.
 4. Once the feedback period ends, you can tag it as `frozen` on GitHub.
@@ -66,7 +66,7 @@ On-chain enactment: 3, after 2, 2d
    - All data types match the spec.
    - The forum post is at least 48h old and contains the encoded proposal.
 6. The Meta Guild multisig creates the vote on Snapshot.
-7. The Meta Guild multisig creates the vote on Aragon.
+7. If the Snapshot vote passed, the Meta Guild multisig creates the vote on Aragon.
 
 ## Proposals with critical impact
 
@@ -79,7 +79,7 @@ The Nation3 DAO has an Agent app instance (called _Critical Agent_) governed by 
 - **Voting system**: Binary (yes/no).
 - **Voting threshold**: >66% (supermajority) approval threshold with >20% participation rate.
 
-Any proposal which would trigger a transaction from the _Critical Agent_ app on the Nation3 DAO must be tagged as critical. All critical proposals follow the same governance process as standard proposals, but instead of 48h for each step in the process, it's 168h (a full week).
+Any proposal which would trigger a transaction from the _Critical Agent_ app on the Nation3 DAO follows the same governance process as standard proposals, but instead of 48h for each step in the process, it's 168h (a full week).
 
 ## Who can create votes
 

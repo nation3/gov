@@ -34,7 +34,7 @@ type MetaProposal = {
 
 declare namespace SnapshotVotingParams {
   /* Defines Snapshot's voting systems, except for quadratic which currently
-   * doesn't work for Nation3 because of lack of Sybil resistance, and approval,  * which is redundant with weighted */
+   * doesn't work for Nation3 because of lack of Sybil resistance, and approval, which is redundant with weighted */
   /**
    * @title Voting system
    * @default single-choice
@@ -122,8 +122,8 @@ type ChainId = 1
  * @title DAO Agent triggering the transaction
  */
 type DAOAgents =
-  | '0x7b81e8d4e82796c9b76284fa4d21e57b8b86a06c'
   | '0x336252602b3a8a0be336ed942228305173e8082b'
+  | '0x7b81e8d4e82796c9b76284fa4d21e57b8b86a06c'
 
 type OnChainTransaction = {
   chainId: ChainId
@@ -187,9 +187,8 @@ type ContractCall = OnChainTransaction & {
 /* On-chain proposal types */
 
 /**
- * Proposal to transfer, approve or interact with a contract moving an ERC20
- * token outside of the Nation3 DAO's treasury, with the expectation that it
- * flows outside of its control
+ * Proposal to transfer an ERC20 token outside of the Nation3 DAO's treasury,
+ * with the expectation that it flows outside of its control
  * @title Expense
  */
 type ExpenseProposal = {
@@ -221,7 +220,7 @@ type ParameterChangeProposal = {
 /**
  * Proposal to perform an on-chain treasury management operation.
  * Examples: Trading on DEXes, lending, borrowing or buying options on DeFi
- * protocols, adding or removing liquidity from pools, registering an ENS name
+ * protocols, adding or removing liquidity from pools, buying an ENS name
  * @title Treasury management
  */
 type TreasuryManagementProposal = {
