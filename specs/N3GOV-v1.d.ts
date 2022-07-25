@@ -46,9 +46,10 @@ declare namespace SnapshotVotingParams {
     votingSystem: VotingSystems
     /**
      * @title Choices
+     * @minItems 1
      * @maxItems 5
      */
-    choices: [string, ...Array<string>]
+    choices: Array<string>
     /**
      * @title Amount of winning choices
      * @maximum 5
@@ -258,9 +259,10 @@ type SnapshotVote = AragonVote & {
   /**
    * Winning choice or choices in Snapshot
    * @title Winning choice(s)
-   * @maxLength 5
+   * @minItems 1
+   * @maxItems 5
    */
-  winningChoices: [string, ...Array<string>]
+  winningChoices: Array<string>
 }
 
 export type Proposal = {
@@ -297,7 +299,8 @@ export type Proposal = {
     | CustodialTreasuryManagementProposal
   /**
    * @title Votes
-   * @maximum 5
+   * @minItems 1
+   * @maxItems 5
    */
   votes?: [SnapshotVote, ...Array<AragonVote>]
 }
