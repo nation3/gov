@@ -433,7 +433,7 @@
             "type": "object"
         },
         "__type_4": {
-            "description": "Proposal to transfer, approve or interact with a contract moving an ERC20\ntoken outside of the Nation3 DAO's treasury, with the expectation that it\nflows outside of its control",
+            "description": "Proposal to transfer an ERC20 token outside of the Nation3 DAO's treasury,\nwith the expectation that it flows outside of its control",
             "properties": {
                 "kind": {
                     "$ref": "#/definitions/ProposalKinds.Expense",
@@ -469,7 +469,7 @@
             "type": "object"
         },
         "__type_6": {
-            "description": "Proposal to perform an on-chain treasury management operation.\nExamples: Trading on DEXes, lending, borrowing or buying options on DeFi\nprotocols, adding or removing liquidity from pools, registering an ENS name",
+            "description": "Proposal to perform an on-chain treasury management operation.\nExamples: Trading on DEXes, lending, borrowing or buying options on DeFi\nprotocols, adding or removing liquidity from pools, buying an ENS name",
             "properties": {
                 "calls": {
                     "$ref": "#/definitions/ContractCalls"
@@ -518,7 +518,7 @@
                 },
                 {
                     "$ref": "#/definitions/ExpenseProposal",
-                    "description": "Proposal to transfer, approve or interact with a contract moving an ERC20\ntoken outside of the Nation3 DAO's treasury, with the expectation that it\nflows outside of its control"
+                    "description": "Proposal to transfer an ERC20 token outside of the Nation3 DAO's treasury,\nwith the expectation that it flows outside of its control"
                 },
                 {
                     "$ref": "#/definitions/ParameterChangeProposal",
@@ -526,7 +526,7 @@
                 },
                 {
                     "$ref": "#/definitions/TreasuryManagementProposal",
-                    "description": "Proposal to perform an on-chain treasury management operation.\nExamples: Trading on DEXes, lending, borrowing or buying options on DeFi\nprotocols, adding or removing liquidity from pools, registering an ENS name"
+                    "description": "Proposal to perform an on-chain treasury management operation.\nExamples: Trading on DEXes, lending, borrowing or buying options on DeFi\nprotocols, adding or removing liquidity from pools, buying an ENS name"
                 },
                 {
                     "$ref": "#/definitions/CustodialTreasuryManagementProposal",
