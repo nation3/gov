@@ -62,7 +62,7 @@ On-chain enactment: 3, after 2, 2d
 2. [Open a pull request](https://github.com/nation3/gov-proposals/pull/new) in the `gov-proposals` repo adding the proposal as `N3GOV-X.json`. Link the pull request at the end of your forum post.
 3. Modify the proposal based on feedback, both in the forum and in the pull request.
 4. Once the feedback period ends, you can tag it as `frozen` on GitHub.
-5. A bot will automatically merge and assing it an ID after checking:
+5. A bot will automatically merge and assign it an ID after checking:
    - All data types match the spec.
    - The forum post is at least 48h old and contains the encoded proposal.
    - In case of bot malfunctioning, or the bot not being implemented, at least 2 reviews by Meta Guild members are needed for a proposal to be merged.
@@ -82,7 +82,7 @@ The Nation3 DAO has an Agent app instance (called _Critical Agent_) governed by 
 
 Any proposal which would trigger a transaction from the _Critical Agent_ app on the Nation3 DAO follows the same governance process as standard proposals, but instead of 48h for each step in the process, it's 168h (a full week).
 
-## Who can create votes
+## Who can create votes?
 
 The [Meta Guild multisig](https://gnosis-safe.io/app/eth:0x7fFf737ae9FdDD6E28Fe8B8F0F4dE69Bb8e7a885) has permission to create votes, both in the Nation3 space on Snapshot and the Nation3 DAO on Aragon.
 
