@@ -22,7 +22,7 @@ flowchart LR
   OFFVOTE --> ONVOTE[On-chain enactment]
 ```
 
-1. **Community review**: The community provides feedback on a published proposal for the proposer to consider. After the minimum duration required for this stage, the proposer can freeze their proposal, advancing it to the next stage. After freeze, any further modifications to the proposal require restarting the process.
+1. **Community review**: The community provides feedback on a published proposal for the proposer to consider. The proposer must explain how the proposal helps Nation3 advance its North Star metrics. After the minimum duration required for this stage, the proposer can freeze their proposal, advancing it to the next stage. After freeze, any further modifications to the proposal require restarting the process.
    - **Duration**: >48h.
    - **Platform**: [Forum](https://forum.nation3.org).
 2. **Off-chain vote**: Citizens can vote. The Meta Guild is responsible for creating the proposal on Snapshot.
@@ -60,14 +60,15 @@ On-chain enactment: 4, after 3, 2d
 
 ## Submitting a proposal
 
-1. Once you are ready to submit a formal proposal, go to the [Proposal Generator](https://gov.nation3.org/proposals/create) to generate an encoded version.
-2. [Open a pull request](https://github.com/nation3/governance/pull/new) adding the proposal to this repo. Link the pull request at the end of your forum post.
+1. Once you are ready to submit a formal proposal, go to the [Proposal Generator](https://gov.nation3.org/proposals/create) to generate an encoded version. Proposals need to adhere to the [governance spec](../specs/N3GOV-v1.d.ts).
+2. [Open a pull request](https://github.com/nation3/gov-proposals/pull/new) in the `gov-proposals` repo adding the proposal as `N3GOV-X.json`. Link the pull request at the end of your forum post.
 3. Modify the proposal based on feedback, both in the forum and in the pull request.
 4. Once the feedback period ends, you can tag it as `frozen` on GitHub.
-5. A bot will automatically merge it after checking:
+5. A bot will automatically merge and assing it an ID after checking:
    - All data types match the spec.
    - The forum post is at least 48h old and contains the encoded proposal.
-6. The Meta Guild multisig creates the vote on Snapshot.
+   - In case of bot malfunctioning, or the bot not being implemented, at least 2 reviews by Meta Guild members are needed for a proposal to be merged.
+6. The Meta Guild multisig creates the vote on Snapshot. The vote must start with `N3GOV-ID: ` (where ID is the proposal's ID) followed by the title of the proposal's discussion.
 7. If the Snapshot vote passed, the Meta Guild multisig creates the vote on Aragon.
 
 ## Proposals with critical impact

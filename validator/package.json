@@ -6,10 +6,10 @@
   "author": "Nation3 DAO",
   "license": "AGPL-3.0-or-later",
   "scripts": {
-    "validate": "ts-node index.ts"
+    "validate": "node index.js"
   },
   "dependencies": {
-    "@nation3/gov-specs": "^1.0.0-beta6",
+    "@nation3/gov-specs": "^1.0.0-beta7",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
     "typescript-json-schema": "^0.54.0"

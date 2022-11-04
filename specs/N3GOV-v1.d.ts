@@ -1,6 +1,6 @@
 /**
  * Data structures for governance proposals presented to the Nation3 DAO
- * Version 1.0-beta2
+ * Version 1.0-beta4
  */
 
 declare enum ProposalKinds {
@@ -12,7 +12,135 @@ declare enum ProposalKinds {
   CustodialTreasuryManagement = 'custodial-treasury-management',
 }
 
-/* Off-chain proposal types */
+/* Shared types */
+
+declare namespace SnapshotVotingParams {
+  /**
+   * @title Voting system
+   */
+  enum VotingSystems {
+    SingleChoice = 'single-choice',
+    RankedChoice = 'ranked-choice',
+    Weighted = 'weighted',
+  }
+
+  /**
+   * @title Binary choice
+   */
+  export type BinaryChoice = {
+    /**
+     * @default single-choice
+     */
+    votingSystem: VotingSystems.SingleChoice
+    /**
+     * @title Choices
+     * @default ["Approve", "Reject"]
+     */
+    choices: ['Approve', 'Reject']
+  }
+
+  /**
+   * @title Multiple choice
+   */
+  export type MultiChoice = {
+    votingSystem: VotingSystems
+    /**
+     * @title Choices
+     * @minItems 1
+     * @maxItems 5
+     */
+    choices: Array<string>
+    /**
+     * @title Amount of winning choices
+     * @maximum 5
+     */
+    winningChoicesAmount: number
+  }
+}
+
+/**
+ * Ethereum address
+ * @TJS-pattern ^0x[a-fA-F0-9]{40}$
+ */
+type Address = string
+
+declare namespace TransactionOrigins {
+  export type Ethereum = {
+    /**
+     * @default 1
+     */
+    chainId: 1
+    /**
+     * @title Nation3 DAO Agent triggering the transaction
+     * @default 0x336252602b3a8a0be336ed942228305173e8082b
+     */
+    from:
+      | '0x336252602b3a8a0be336ed942228305173e8082b'
+      | '0x7b81e8d4e82796c9b76284fa4d21e57b8b86a06c'
+  }
+}
+
+/**
+ * @title ERC20 transfer
+ */
+type ERC20Transfer = TransactionOrigins.Ethereum & {
+  /**
+   * @title Recipient
+   */
+  recipient: Address
+  /**
+   * @title Token
+   */
+  token: Address
+  /**
+   * @title Amount
+   * @minimum 0
+   */
+  amount: number
+  /**
+   * In case part of the original expense amount was given back to the DAO
+   * @title Reimbursement
+   * @minimum 0
+   */
+  reimbursement?: number
+}
+
+/**
+ * @title ERC20 transfers
+ * @maxItems 5
+ */
+type ERC20Transfers = Array<ERC20Transfer>
+
+/**
+ * @title Smart contract call
+ */
+type ContractCall = TransactionOrigins.Ethereum & {
+  /**
+   * @title Contract address
+   */
+  to: Address
+  /**
+   * @title Method
+   */
+  method: string
+  /**
+   * @title Parameters
+   */
+  parameters?: Array<string>
+  /**
+   * @title ETH value
+   * @minimum 0
+   */
+  value?: number
+}
+
+/**
+ * @title Contract calls
+ * @maxItems 5
+ */
+type ContractCalls = Array<ContractCall>
+
+/* Proposal types */
 
 /**
  * Proposal that modifies the current governance process (`specs/N3GOV-v1.ts`
@@ -25,63 +153,13 @@ type MetaProposal = {
    */
   kind: ProposalKinds.Meta
   /**
-   * Link to a pull request to the nation3/governance repo on GitHub
+   * Link to a pull request to the nation3/gov repo on GitHub
    * @title PR link
    * @TJS-format uri
    */
   prURI: string
 }
 
-declare namespace SnapshotVotingParams {
-  /* Defines Snapshot's voting systems, except for quadratic which currently
-   * doesn't work for Nation3 because of lack of Sybil resistance, and approval, which is redundant with weighted */
-  /**
-   * @title Voting system
-   * @default single-choice
-   */
-  enum VotingSystems {
-    SingleChoice = 'single-choice',
-    RankedChoice = 'ranked-choice',
-    Weighted = 'weighted',
-  }
-
-  /**
-   * Only approve or reject
-   * @title Binary choice
-   */
-  export type BinaryChoice = {
-    /**
-     * @title Voting system
-     * @default single-choice
-     */
-    votingSystem: VotingSystems.SingleChoice
-    /**
-     * @title Choices
-     * @default ["Approve", "Reject"]
-     */
-    choices: ['Approve', 'Reject']
-  }
-
-  /**
-   * Multiple choices can pass
-   * @title Multiple choice
-   */
-  export type MultiChoice = {
-    votingSystem: VotingSystems
-    /**
-     * @title Choices
-     */
-    choices: Array<string>
-    /**
-     * @title Amount of winning choices
-     */
-    winningChoicesAmount: number
-  }
-}
-
-// Since multiple choices would be written in English and not encoded, this is
-// the only kind of proposal on Snapshot that can use other voting systems
-// other than Single Choice
 /**
  * Proposal for the Nation3 DAO to adopt a statement
  * @title Proclamation
@@ -103,89 +181,6 @@ type ProclamationProposal = {
     | SnapshotVotingParams.MultiChoice
 }
 
-/* Common types */
-
-/**
- * Ethereum address
- * @TJS-pattern ^0x[a-fA-F0-9]{40}$
- */
-type Address = string
-
-/**
- * Only supporting Ethereum for now
- * @title Chain ID
- * @default 1
- */
-type ChainId = 1
-
-/**
- * @title DAO Agent triggering the transaction
- */
-type DAOAgents =
-  | '0x336252602b3a8a0be336ed942228305173e8082b'
-  | '0x7b81e8d4e82796c9b76284fa4d21e57b8b86a06c'
-
-type OnChainTransaction = {
-  chainId: ChainId
-  from: DAOAgents
-}
-
-/**
- * @title ERC20 transfer
- */
-type ERC20Transfer = OnChainTransaction & {
-  /**
-   * @title Recipient
-   */
-  recipient: Address
-  /**
-   * @title Token
-   */
-  token: Address
-  /**
-   * @title Amount
-   * @minimum 0
-   */
-  amount: number
-  /**
-   * @title Reimbursement
-   * @minimum 0
-   */
-  reimbursement?: number
-}
-
-/**
- * @title ERC20 transfers
- */
-type ERC20Transfers = [ERC20Transfer, ...Array<ERC20Transfer>]
-
-/**
- * @title Smart contract call
- */
-type ContractCall = OnChainTransaction & {
-  /**
-   * @title Address to send the transaction to
-   */
-  to: Address
-  /**
-   * @title Method
-   */
-  method: string
-  /* react-jsonschema-form doesn't support an array with multiple types */
-  /**
-   * @title Parameters
-   */
-  parameters?: Array<string>
-  /**
-   * @title ETH value
-   * @minimum 0
-   * @default 0
-   */
-  value?: number
-}
-
-/* On-chain proposal types */
-
 /**
  * Proposal to transfer an ERC20 token outside of the Nation3 DAO's treasury,
  * with the expectation that it flows outside of its control
@@ -198,11 +193,6 @@ type ExpenseProposal = {
   kind: ProposalKinds.Expense
   transfers: ERC20Transfers
 }
-
-/**
- * @title Contract calls
- */
-type ContractCalls = [ContractCall, ...Array<ContractCall>]
 
 /**
  * Proposal to perform a parameter change in one of the contracts controlled by
@@ -248,18 +238,6 @@ type CustodialTreasuryManagementProposal = {
 }
 
 /**
- * Agreement in the Nation3 jurisdiction entered by the proposer in order to
- * send a governance proposal. They can be slashed in case of breach of duties
- * Having this agreement in place also lets us extract the proposer's account
- * @title Agreement
- */
-type Agreement = {
-  chainId: ChainId
-  agreementsFramework: Address
-  agreementId: number
-}
-
-/**
  * @title Aragon vote
  */
 type AragonVote = {
@@ -281,8 +259,10 @@ type SnapshotVote = AragonVote & {
   /**
    * Winning choice or choices in Snapshot
    * @title Winning choice(s)
+   * @minItems 1
+   * @maxItems 5
    */
-  winningChoices: [string, ...Array<string>]
+  winningChoices: Array<string>
 }
 
 export type Proposal = {
@@ -290,6 +270,7 @@ export type Proposal = {
    * Version of this spec that the proposal adheres to
    * @title Specification
    * @minimum 0
+   * @maximum 1
    * @default 1
    */
   spec: number
@@ -316,9 +297,10 @@ export type Proposal = {
     | ParameterChangeProposal
     | TreasuryManagementProposal
     | CustodialTreasuryManagementProposal
-  // agreement?: Agreement
   /**
    * @title Votes
+   * @minItems 1
+   * @maxItems 5
    */
   votes?: [SnapshotVote, ...Array<AragonVote>]
 }
