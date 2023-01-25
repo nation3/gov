@@ -1,11 +1,11 @@
 /**
  * Data structures for governance proposals presented to the Nation3 DAO
- * Version 1.0-beta4
+ * Version 2.0
  */
 
 declare enum ProposalKinds {
   Meta = 'meta',
-  Proclamation = 'proclamation',
+  Law = 'law',
   Expense = 'expense',
   ParameterChange = 'parameter-change',
   TreasuryManagement = 'treasury-management',
@@ -13,50 +13,6 @@ declare enum ProposalKinds {
 }
 
 /* Shared types */
-
-declare namespace SnapshotVotingParams {
-  /**
-   * @title Voting system
-   */
-  enum VotingSystems {
-    SingleChoice = 'single-choice',
-    RankedChoice = 'ranked-choice',
-    Weighted = 'weighted',
-  }
-
-  /**
-   * @title Binary choice
-   */
-  export type BinaryChoice = {
-    /**
-     * @default single-choice
-     */
-    votingSystem: VotingSystems.SingleChoice
-    /**
-     * @title Choices
-     * @default ["Approve", "Reject"]
-     */
-    choices: ['Approve', 'Reject']
-  }
-
-  /**
-   * @title Multiple choice
-   */
-  export type MultiChoice = {
-    votingSystem: VotingSystems
-    /**
-     * @title Choices
-     * @minItems 1
-     * @maxItems 5
-     */
-    choices: Array<string>
-    /**
-     * @title Amount of winning choices
-     * @maximum 5
-     */
-    winningChoicesAmount: number
-  }
-}
 
 /**
  * Ethereum address
@@ -143,8 +99,7 @@ type ContractCalls = Array<ContractCall>
 /* Proposal types */
 
 /**
- * Proposal that modifies the current governance process (`specs/N3GOV-v1.ts`
- * and `GOVERNANCE.md`)
+ * Proposal that modifies the Constitution
  * @title Meta
  */
 type MetaProposal = {
@@ -153,7 +108,7 @@ type MetaProposal = {
    */
   kind: ProposalKinds.Meta
   /**
-   * Link to a pull request to the nation3/gov repo on GitHub
+   * Link to a pull request to the nation3/constitution repo on GitHub
    * @title PR link
    * @TJS-format uri
    */
@@ -161,24 +116,20 @@ type MetaProposal = {
 }
 
 /**
- * Proposal for the Nation3 DAO to adopt a statement
- * @title Proclamation
+ * Proposal for the DAO to pass a law binding the Nation3 Jurisdiction.
+ * @title Law
  */
-type ProclamationProposal = {
+type LawProposal = {
   /**
-   * @default proclamation
+   * @default law
    */
-  kind: ProposalKinds.Proclamation
+  kind: ProposalKinds.Law
   /**
-   * @title Statement
+   * Link to a pull request to the nation3/law repo on GitHub
+   * @title PR link
+   * @TJS-format uri
    */
-  statement: string
-  /**
-   * @title Parameters of the vote
-   */
-  parameters:
-    | SnapshotVotingParams.BinaryChoice
-    | SnapshotVotingParams.MultiChoice
+  prURI: string
 }
 
 /**
@@ -238,9 +189,9 @@ type CustodialTreasuryManagementProposal = {
 }
 
 /**
- * @title Aragon vote
+ * @title Vote
  */
-type AragonVote = {
+type Vote = {
   /**
    * @title URI
    * @TJS-format uri
@@ -252,26 +203,13 @@ type AragonVote = {
   passed: boolean
 }
 
-/**
- * @title Snapshot vote
- */
-type SnapshotVote = AragonVote & {
-  /**
-   * Winning choice or choices in Snapshot
-   * @title Winning choice(s)
-   * @minItems 1
-   * @maxItems 5
-   */
-  winningChoices: Array<string>
-}
-
 export type Proposal = {
   /**
    * Version of this spec that the proposal adheres to
    * @title Specification
    * @minimum 0
    * @maximum 1
-   * @default 1
+   * @default 2
    */
   spec: number
   /**
@@ -292,7 +230,7 @@ export type Proposal = {
    */
   content:
     | MetaProposal
-    | ProclamationProposal
+    | LawProposal
     | ExpenseProposal
     | ParameterChangeProposal
     | TreasuryManagementProposal
@@ -302,5 +240,5 @@ export type Proposal = {
    * @minItems 1
    * @maxItems 5
    */
-  votes?: [SnapshotVote, ...Array<AragonVote>]
+  votes?: Array<Vote>
 }
