@@ -1,7 +1,7 @@
 # Nation3 governance process
 
 This document outlines the governance process that the Nation3 citizens, the Meta Guild multisig and the proposers must follow to engage with Nation3 governance.
-This document adheres to the [Nation3 
+This document adheres to the [Nation3
 Constitution](https://linked.md/v?u=ipfs://bafybeia2fmdzldlbjbad3j7ywmj7dz32ptyz3hqmdkunpyty6zn7k7mh3q/Constitution.linked.md).
 
 ## Kinds of proposals
@@ -17,9 +17,7 @@ Constitution](https://linked.md/v?u=ipfs://bafybeia2fmdzldlbjbad3j7ywmj7dz32ptyz
 
 ```mermaid
 flowchart LR
-  REVIEW[Community review] --> DISPUTE[Dispute period]
-  DISPUTE --> OFFVOTE[Off-chain vote]
-  FINAL --> OFFVOTE[Off-chain vote]
+  REVIEW[Community review] --> OFFVOTE[Off-chain vote]
   OFFVOTE --> ONVOTE[On-chain enactment]
 ```
 
@@ -53,15 +51,14 @@ title Lifecycle of a proposal
 
 Community review: 1, 0000-01-01, 2d
 Off-chain vote: 2, after 1, 2d
-Dispute period: 3, after 2, 2d
-On-chain enactment: 4, after 3, 2d
+On-chain enactment: 3, after 2, 2d
 ```
 
 ## Submitting a proposal
 
 1. Once you are ready to submit a formal proposal, go to the [Proposal Generator](https://gov.nation3.org/proposals/create) to generate an encoded version. Proposals need to adhere to the [governance spec](../specs/N3GOV-v1.d.ts).
-2. [Open a pull request](https://github.com/nation3/gov-proposals/pull/new) in the `gov-proposals` repo adding the proposal 
-as `N3GOV-ID.json` (where ID is the suggested proposal's ID). Link the pull request at the end of your forum post.
+2. [Open a pull request](https://github.com/nation3/gov-proposals/pull/new) in the `gov-proposals` repo adding the proposal
+   as `N3GOV-ID.json` (where ID is the suggested proposal's ID). Link the pull request at the end of your forum post.
 3. Modify the proposal based on feedback, both in the forum and in the pull request.
 4. Once the feedback period ends, you can tag it as `frozen` on GitHub.
 5. A bot will automatically merge and assign it an ID after checking:
