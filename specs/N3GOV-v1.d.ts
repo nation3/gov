@@ -99,7 +99,7 @@ type ContractCalls = Array<ContractCall>
 /* Proposal types */
 
 /**
- * Proposal that modifies the Constitution
+ * Proposal that modifies the Constitution or any of its dependencies
  * @title Meta
  */
 type MetaProposal = {
@@ -108,7 +108,7 @@ type MetaProposal = {
    */
   kind: ProposalKinds.Meta
   /**
-   * Link to a pull request to the nation3/constitution repo on GitHub
+   * Link to a pull request to the nation3/law repo on GitHub
    * @title PR link
    * @TJS-format uri
    */
