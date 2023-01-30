@@ -2,7 +2,7 @@
 
 This document outlines the governance process that the Nation3 citizens, the Meta Guild multisig and the proposers must follow to engage with Nation3 governance.
 This document adheres to the [Nation3
-Constitution](https://linked.md/v?u=ipfs://bafybeibe5oreysj5ibbubs3xkq3nmcrufogy5zkpc2v3xxza7uls5evpii/Constitution.linked.md).
+Constitution](https://linked.md/v?u=ipfs://bafybeidfupkrpzch3gwryqnaevratjc2nabhfoibygn5mmdpaylzbmajqu/Constitution.linked.md).
 
 ## Kinds of proposals
 
