@@ -7,7 +7,8 @@
   "author": "Nation3 DAO",
   "license": "GPL-3.0-or-later",
   "scripts": {
-    "generate-json-schema": "typescript-json-schema N3GOV-v1.d.ts Proposal --required --refs --strictNullChecks -o N3GOV-v1.json"
+    "generate-json-schema-1": "typescript-json-schema N3GOV-v1.d.ts Proposal --required --refs --strictNullChecks -o N3GOV-v1.json",
+    "generate-json-schema-2": "typescript-json-schema N3GOV-v2.d.ts Proposal --required --refs --strictNullChecks -o N3GOV-v2.json"
   },
   "private": false,
   "devDependencies": {
