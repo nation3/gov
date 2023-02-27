@@ -6,7 +6,7 @@ Constitution](https://linked.md/v?u=ipfs://bafybeidfupkrpzch3gwryqnaevratjc2nabh
 
 ## Kinds of proposals
 
-- **Meta**: Proposal that modifies the current governance process (`specs/N3GOV-v1.d.ts` and `GOVERNANCE.md`).
+- **Meta**: Proposal that modifies the current governance process (`specs/N3GOV-v2.d.ts` and `GOVERNANCE.md`).
 - **Law**: Proposal for the DAO to pass a law binding the [Nation3 Jurisdiction](https://docs.nation3.org/jurisdiction/overview).
 - **Expense**: Proposal to transfer an ERC20 token outside of the Nation3 DAO's treasury, with the expectation that it flows outside of its control.
 - **Parameter change**: Proposal to perform a parameter change in one of the contracts controlled by the Nation3 DAO.
@@ -56,7 +56,7 @@ On-chain enactment: 3, after 2, 2d
 
 ## Submitting a proposal
 
-1. Once you are ready to submit a formal proposal, go to the [Proposal Generator](https://gov.nation3.org/proposals/create) to generate an encoded version. Proposals need to adhere to the [governance spec](../specs/N3GOV-v1.d.ts).
+1. Once you are ready to submit a formal proposal, go to the [Proposal Generator](https://gov.nation3.org/proposals/create) to generate an encoded version. Proposals need to adhere to the [governance spec](../specs/N3GOV-v2.d.ts).
 2. [Open a pull request](https://github.com/nation3/gov-proposals/pull/new) in the `gov-proposals` repo adding the proposal
    as `N3GOV-ID.json` (where ID is the suggested proposal's ID). Link the pull request at the end of your forum post.
 3. Modify the proposal based on feedback, both in the forum and in the pull request.
