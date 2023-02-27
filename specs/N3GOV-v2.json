@@ -1,0 +1,452 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "content": {
+            "anyOf": [
+                {
+                    "description": "Proposal that modifies the Constitution or any of its dependencies",
+                    "properties": {
+                        "kind": {
+                            "default": "meta",
+                            "enum": [
+                                "meta"
+                            ],
+                            "type": "string"
+                        },
+                        "prURI": {
+                            "description": "Link to a pull request to the nation3/law repo on GitHub",
+                            "format": "uri",
+                            "title": "PR link",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "kind",
+                        "prURI"
+                    ],
+                    "title": "Meta",
+                    "type": "object"
+                },
+                {
+                    "description": "Proposal for the DAO to pass a law binding the Nation3 Jurisdiction.",
+                    "properties": {
+                        "kind": {
+                            "default": "law",
+                            "enum": [
+                                "law"
+                            ],
+                            "type": "string"
+                        },
+                        "prURI": {
+                            "description": "Link to a pull request to the nation3/law repo on GitHub",
+                            "format": "uri",
+                            "title": "PR link",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "kind",
+                        "prURI"
+                    ],
+                    "title": "Law",
+                    "type": "object"
+                },
+                {
+                    "description": "Proposal to transfer an ERC20 token outside of the Nation3 DAO's treasury,\nwith the expectation that it flows outside of its control",
+                    "properties": {
+                        "kind": {
+                            "default": "expense",
+                            "enum": [
+                                "expense"
+                            ],
+                            "type": "string"
+                        },
+                        "transfers": {
+                            "items": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "chainId": {
+                                                "default": 1,
+                                                "enum": [
+                                                    1
+                                                ],
+                                                "type": "number"
+                                            },
+                                            "from": {
+                                                "default": "0x336252602b3a8a0be336ed942228305173e8082b",
+                                                "enum": [
+                                                    "0x336252602b3a8a0be336ed942228305173e8082b",
+                                                    "0x7b81e8d4e82796c9b76284fa4d21e57b8b86a06c"
+                                                ],
+                                                "title": "Nation3 DAO Agent triggering the transaction",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "chainId",
+                                            "from"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    {
+                                        "properties": {
+                                            "amount": {
+                                                "minimum": 0,
+                                                "title": "Amount",
+                                                "type": "number"
+                                            },
+                                            "recipient": {
+                                                "description": "Ethereum address",
+                                                "pattern": "^0x[a-fA-F0-9]{40}$",
+                                                "title": "Recipient",
+                                                "type": "string"
+                                            },
+                                            "reimbursement": {
+                                                "description": "In case part of the original expense amount was given back to the DAO",
+                                                "minimum": 0,
+                                                "title": "Reimbursement",
+                                                "type": "number"
+                                            },
+                                            "token": {
+                                                "description": "Ethereum address",
+                                                "pattern": "^0x[a-fA-F0-9]{40}$",
+                                                "title": "Token",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "amount",
+                                            "recipient",
+                                            "token"
+                                        ],
+                                        "type": "object"
+                                    }
+                                ],
+                                "title": "ERC20 transfer"
+                            },
+                            "maxItems": 5,
+                            "title": "ERC20 transfers",
+                            "type": "array"
+                        }
+                    },
+                    "required": [
+                        "kind",
+                        "transfers"
+                    ],
+                    "title": "Expense",
+                    "type": "object"
+                },
+                {
+                    "description": "Proposal to perform a parameter change in one of the contracts controlled by\nthe Nation3 DAO",
+                    "properties": {
+                        "calls": {
+                            "items": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "chainId": {
+                                                "default": 1,
+                                                "enum": [
+                                                    1
+                                                ],
+                                                "type": "number"
+                                            },
+                                            "from": {
+                                                "default": "0x336252602b3a8a0be336ed942228305173e8082b",
+                                                "enum": [
+                                                    "0x336252602b3a8a0be336ed942228305173e8082b",
+                                                    "0x7b81e8d4e82796c9b76284fa4d21e57b8b86a06c"
+                                                ],
+                                                "title": "Nation3 DAO Agent triggering the transaction",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "chainId",
+                                            "from"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    {
+                                        "properties": {
+                                            "method": {
+                                                "title": "Method",
+                                                "type": "string"
+                                            },
+                                            "parameters": {
+                                                "items": {
+                                                    "type": "string"
+                                                },
+                                                "title": "Parameters",
+                                                "type": "array"
+                                            },
+                                            "to": {
+                                                "description": "Ethereum address",
+                                                "pattern": "^0x[a-fA-F0-9]{40}$",
+                                                "title": "Contract address",
+                                                "type": "string"
+                                            },
+                                            "value": {
+                                                "minimum": 0,
+                                                "title": "ETH value",
+                                                "type": "number"
+                                            }
+                                        },
+                                        "required": [
+                                            "method",
+                                            "to"
+                                        ],
+                                        "type": "object"
+                                    }
+                                ],
+                                "title": "Smart contract call"
+                            },
+                            "maxItems": 5,
+                            "title": "Contract calls",
+                            "type": "array"
+                        },
+                        "kind": {
+                            "default": "parameter-change",
+                            "enum": [
+                                "parameter-change"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "calls",
+                        "kind"
+                    ],
+                    "title": "Parameter change",
+                    "type": "object"
+                },
+                {
+                    "description": "Proposal to perform an on-chain treasury management operation.\nExamples: Trading on DEXes, lending, borrowing or buying options on DeFi\nprotocols, adding or removing liquidity from pools, buying an ENS name",
+                    "properties": {
+                        "calls": {
+                            "items": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "chainId": {
+                                                "default": 1,
+                                                "enum": [
+                                                    1
+                                                ],
+                                                "type": "number"
+                                            },
+                                            "from": {
+                                                "default": "0x336252602b3a8a0be336ed942228305173e8082b",
+                                                "enum": [
+                                                    "0x336252602b3a8a0be336ed942228305173e8082b",
+                                                    "0x7b81e8d4e82796c9b76284fa4d21e57b8b86a06c"
+                                                ],
+                                                "title": "Nation3 DAO Agent triggering the transaction",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "chainId",
+                                            "from"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    {
+                                        "properties": {
+                                            "method": {
+                                                "title": "Method",
+                                                "type": "string"
+                                            },
+                                            "parameters": {
+                                                "items": {
+                                                    "type": "string"
+                                                },
+                                                "title": "Parameters",
+                                                "type": "array"
+                                            },
+                                            "to": {
+                                                "description": "Ethereum address",
+                                                "pattern": "^0x[a-fA-F0-9]{40}$",
+                                                "title": "Contract address",
+                                                "type": "string"
+                                            },
+                                            "value": {
+                                                "minimum": 0,
+                                                "title": "ETH value",
+                                                "type": "number"
+                                            }
+                                        },
+                                        "required": [
+                                            "method",
+                                            "to"
+                                        ],
+                                        "type": "object"
+                                    }
+                                ],
+                                "title": "Smart contract call"
+                            },
+                            "maxItems": 5,
+                            "title": "Contract calls",
+                            "type": "array"
+                        },
+                        "kind": {
+                            "default": "treasury-management",
+                            "enum": [
+                                "treasury-management"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "calls",
+                        "kind"
+                    ],
+                    "title": "Treasury management",
+                    "type": "object"
+                },
+                {
+                    "description": "Proposal to perform a treasury management operation, with the Nation3 DAO\nkeeping the legitimate ownership over the assets but holding them through a\nthird-party entity.\nExamples: Loans to legal entities, equity investments held via a legal\nproxy, liquidations via centralized exchange",
+                    "properties": {
+                        "kind": {
+                            "default": "custodial-treasury-management",
+                            "enum": [
+                                "custodial-treasury-management"
+                            ],
+                            "type": "string"
+                        },
+                        "transfers": {
+                            "items": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "chainId": {
+                                                "default": 1,
+                                                "enum": [
+                                                    1
+                                                ],
+                                                "type": "number"
+                                            },
+                                            "from": {
+                                                "default": "0x336252602b3a8a0be336ed942228305173e8082b",
+                                                "enum": [
+                                                    "0x336252602b3a8a0be336ed942228305173e8082b",
+                                                    "0x7b81e8d4e82796c9b76284fa4d21e57b8b86a06c"
+                                                ],
+                                                "title": "Nation3 DAO Agent triggering the transaction",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "chainId",
+                                            "from"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    {
+                                        "properties": {
+                                            "amount": {
+                                                "minimum": 0,
+                                                "title": "Amount",
+                                                "type": "number"
+                                            },
+                                            "recipient": {
+                                                "description": "Ethereum address",
+                                                "pattern": "^0x[a-fA-F0-9]{40}$",
+                                                "title": "Recipient",
+                                                "type": "string"
+                                            },
+                                            "reimbursement": {
+                                                "description": "In case part of the original expense amount was given back to the DAO",
+                                                "minimum": 0,
+                                                "title": "Reimbursement",
+                                                "type": "number"
+                                            },
+                                            "token": {
+                                                "description": "Ethereum address",
+                                                "pattern": "^0x[a-fA-F0-9]{40}$",
+                                                "title": "Token",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "amount",
+                                            "recipient",
+                                            "token"
+                                        ],
+                                        "type": "object"
+                                    }
+                                ],
+                                "title": "ERC20 transfer"
+                            },
+                            "maxItems": 5,
+                            "title": "ERC20 transfers",
+                            "type": "array"
+                        }
+                    },
+                    "required": [
+                        "kind",
+                        "transfers"
+                    ],
+                    "title": "Treasury management (custodial)",
+                    "type": "object"
+                }
+            ],
+            "description": "Different data is required depending on the proposal kind",
+            "title": "Proposal content"
+        },
+        "discussion": {
+            "description": "URI where the discussion leading to this proposal can be found",
+            "format": "uri",
+            "title": "Discussion URI",
+            "type": "string"
+        },
+        "id": {
+            "description": "Numeric identifier for the proposal, assigned at the time of PR creation",
+            "minimum": 0,
+            "title": "ID of the proposal",
+            "type": "number"
+        },
+        "spec": {
+            "default": 2,
+            "description": "Version of this spec that the proposal adheres to",
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Specification",
+            "type": "number"
+        },
+        "votes": {
+            "items": {
+                "properties": {
+                    "passed": {
+                        "title": "Passed",
+                        "type": "boolean"
+                    },
+                    "uri": {
+                        "format": "uri",
+                        "title": "URI",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "passed",
+                    "uri"
+                ],
+                "title": "Vote",
+                "type": "object"
+            },
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Votes",
+            "type": "array"
+        }
+    },
+    "required": [
+        "content",
+        "discussion",
+        "id",
+        "spec"
+    ],
+    "type": "object"
+}
+
