@@ -9,7 +9,7 @@
     "validate": "node index.js"
   },
   "dependencies": {
-    "@nation3/gov-specs": "^1.0.0-beta7",
+    "@nation3/gov-specs": "^2.0.2",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
     "typescript-json-schema": "^0.54.0"
