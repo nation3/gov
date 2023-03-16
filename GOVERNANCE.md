@@ -6,7 +6,7 @@ Constitution](https://linked.md/v?u=ipfs://bafybeidfupkrpzch3gwryqnaevratjc2nabh
 
 ## Kinds of proposals
 
-The different kinds of proposals are specified in the [Nation3 Constitution](https://linked.md/v?u=https://linked.md/api/github/nation3/law/main/Constitution.linked.md#Meta%20Proposal)
+The different kinds of proposals are specified in the [Nation3 Constitution](https://linked.md/v?u=https://linked.md/api/github/nation3/law/main/Constitution.linked.md#Meta%20Proposal).
 
 ## Stages of a proposal
 
