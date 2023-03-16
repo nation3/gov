@@ -6,12 +6,7 @@ Constitution](https://linked.md/v?u=ipfs://bafybeidfupkrpzch3gwryqnaevratjc2nabh
 
 ## Kinds of proposals
 
-- **Meta**: Proposal that modifies the current governance process (`specs/N3GOV-v1.d.ts` and `GOVERNANCE.md`).
-- **Law**: Proposal for the DAO to pass a law binding the [Nation3 Jurisdiction](https://docs.nation3.org/jurisdiction/overview).
-- **Expense**: Proposal to transfer an ERC20 token outside of the Nation3 DAO's treasury, with the expectation that it flows outside of its control.
-- **Parameter change**: Proposal to perform a parameter change in one of the contracts controlled by the Nation3 DAO.
-- **Treasury management proposal**: Proposal to perform an on-chain treasury management operation.
-- **Custodial treasury management proposal**: Proposal to perform a treasury management operation, with the Nation3 DAO keeping the legitimate ownership over the assets but holding them through a third-party entity.
+The different kinds of proposals are specified in the [Nation3 Constitution](https://linked.md/v?u=https://linked.md/api/github/nation3/law/main/Constitution.linked.md#Meta%20Proposal)
 
 ## Stages of a proposal
 
@@ -56,15 +51,14 @@ On-chain enactment: 3, after 2, 2d
 
 ## Submitting a proposal
 
-1. Once you are ready to submit a formal proposal, go to the [Proposal Generator](https://gov.nation3.org/proposals/create) to generate an encoded version. Proposals need to adhere to the [governance spec](../specs/N3GOV-v1.d.ts).
+1. Once you are ready to submit a formal proposal, go to the [Proposal Generator](https://gov.nation3.org/proposals/create) to generate an encoded version. Proposals need to adhere to the [governance spec](../specs/N3GOV-v2.d.ts).
 2. [Open a pull request](https://github.com/nation3/gov-proposals/pull/new) in the `gov-proposals` repo adding the proposal
    as `N3GOV-ID.json` (where ID is the suggested proposal's ID). Link the pull request at the end of your forum post.
 3. Modify the proposal based on feedback, both in the forum and in the pull request.
 4. Once the feedback period ends, you can tag it as `frozen` on GitHub.
-5. A bot will automatically merge and assign it an ID after checking:
+5. A bot will automatically allow you to merge it after checking:
    - All data types match the spec.
-   - The forum post is at least 48h old and contains the encoded proposal.
-   - In case of bot malfunctioning, or the bot not being implemented, at least 2 reviews by Meta Guild members are needed for a proposal to be merged.
+   - The pull request is at least 48h old.
 6. The Meta Guild multisig creates the vote on Snapshot. The vote must start with `N3GOV-ID: ` (where ID is the proposal's ID) followed by the title of the proposal's discussion.
 7. If the Snapshot vote passed, the Meta Guild multisig creates the vote on Aragon.
 
