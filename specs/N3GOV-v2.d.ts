@@ -208,7 +208,7 @@ export type Proposal = {
    * Version of this spec that the proposal adheres to
    * @title Specification
    * @minimum 0
-   * @maximum 1
+   * @maximum 2
    * @default 2
    */
   spec: number
